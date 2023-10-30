@@ -1,93 +1,145 @@
 @import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Heebo:wght@100;200&display=swap');
 
-body{
+body {
 
   background-color: #eee;
 }
 
-.navbar-nav>li>a{
+.navbar-nav>li>a {
 
   text-transform: uppercase;
   font-size: 12px;
-  margin-right:20px;
+  margin-right: 20px;
   color: #fff;
 }
 
 
 .navbar-toggler {
-    padding: .20rem .50rem;
-    font-size: 1.25rem;
-    line-height: 1;
-    background-color: transparent;
-    border: 1px solid white;
+  padding: .20rem .50rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid white;
 
-    }
-
-    .nav-link{
-
-      color: #fff !important;
-    }
-
-
-.wrapper{
-    width: 100%;
-    position: absolute;
-    height: 30%;
-    background-color: #34D399;
-    clip-path: polygon(71% 0, 100% 0, 100% 50%, 100% 50%, 81% 50%);
-    transition: 1s all;
 }
 
-.navbar-brand{
+.nav-link {
 
-  color:#34D399;
+  color: #fff !important;
+}
+
+
+.wrapper {
+  width: 100%;
+  position: absolute;
+  height: 30%;
+  background-color: #34D399;
+  clip-path: polygon(71% 0, 100% 0, 100% 50%, 100% 50%, 81% 50%);
+  transition: 1s all;
+}
+
+.navbar-brand {
+
+  color: #34D399;
   font-family: 'Allerta Stencil', sans-serif;
   margin-bottom: 4px;
   font-size: 27px;
 }
 
-.navbar-slant:hover .wrapper{
+.navbar-slant:hover .wrapper {
 
   clip-path: polygon(81% 0, 100% 0, 100% 50%, 100% 50%, 65% 50%);
 
 }
 
-.navbar-brand:hover{
+.navbar-brand:hover {
 
-  color:#fff;
-  
+  color: #fff;
+
 }
 
 .navbar-slant {
   height: 40px;
-  background-color:black;
+  background-color: black;
   color: #fff;
   font-family: 'Heebo', sans-serif;
 }
+
 .navbar-slant .info {
-    width: 75%;
-    margin-right: 60px
-}
-.navbar-slant .info h6 {
-    font-size: small;
+  width: 75%;
+  margin-right: 60px
 }
 
-.all-show{
+.navbar-slant .info h6 {
+  font-size: small;
+}
+
+.all-show {
   z-index: 5;
 }
 
 .socials {
-    justify-content: space-around;
-    color: #fff;
-    z-index: 10;
+  justify-content: space-around;
+  color: #fff;
+  z-index: 10;
 }
 
-/* p {
-    margin: 10px 0 !important;
+p {
+  margin: 10px 0 !important;
 }
 
 .login-container {
-    width: 400px;
-    margin-top: 50px;
-    text-align: center;
-} */
+  width: 400px;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #62e4b4
+}
+
+.profile-button {
+  background: #34D399;
+  box-shadow: none;
+  border: none
+}
+
+.profile-button:hover {
+  background: #34D399
+}
+
+.profile-button:focus {
+  background: #34D399;
+  box-shadow: none
+}
+
+.profile-button:active {
+  background: #34D399;
+  box-shadow: none
+}
+
+.back:hover {
+  color: #34D399;
+  cursor: pointer
+}
+
+.labels {
+  font-size: 11px
+}
+
+.add-experience:hover {
+  background: #62e4b4;
+  color: #fff;
+  cursor: pointer;
+  border: solid 1px #62e4b4
+}
+
+.btn-float {
+  float: left;
+  margin-right: 10px 
+}
+
+.img-small {
+  width:180px;
+}
