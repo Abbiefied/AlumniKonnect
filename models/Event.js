@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 const EventSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
+        required: [true, 'Title is required'],
         trim: true
     },
     category: {
         type: String,
-        required: true
+        required: [true, 'Category is required']
     },
     status: {
         type: String,
@@ -17,11 +17,11 @@ const EventSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
+        required: [true, 'Description is required']
     },
     details: {
         type: String,
-        required: true
+        required: [true, 'Details is required']
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

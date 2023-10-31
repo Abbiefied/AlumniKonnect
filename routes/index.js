@@ -1,11 +1,18 @@
 const express = require('express')
 const router = express.Router()
-const { ensureAuth, ensureGuest } = require ('../controllers/middleware/authController')
+const { ensureAuth, ensureGuest } = require ('../controllers/authController')
 
 const Event = require('../models/Event')
 
-// Login/Landing page
-router.get('/', ensureGuest, (req, res) => {
+// Landing page
+router.get('/', (req, res) => {
+    res.render('index', {
+
+    })
+})
+
+// Login
+router.get('/login', ensureGuest, (req, res) => {
     res.render('login', {
         layout: 'login',
     })

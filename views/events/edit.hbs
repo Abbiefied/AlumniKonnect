@@ -1,7 +1,7 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <form action="/events/{{event._id}}" method="POST">
-    <input type="hidden" name="_method" value="PUT">
-    <div class="row">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <img class="mt-5"
@@ -19,14 +19,16 @@
                     <div class="row mt-2">
                         <div class="col-md-12">
                             <label class="labels">Title</label>
-                            <input type="text" id="title" name="title" value="{{event.title}}" class="form-control" placeholder="Event title" value="">
+                            <input type="text" id="title" name="title" value="{{event.title}}" class="form-control"
+                                placeholder="Event title" value="">
                         </div>
                         <div class="input-group mb-2 mt-2">
                             <select class="custom-select" id="category" name="category">
                                 <option selected>Category</option>
                                 <option value="networking" name="networking">Networking</option>
                                 <option value="campus-events" name="campus-events">Campus Events</option>
-                                <option value="professional-development" name="professional-development">Professional Developments</option>
+                                <option value="professional-development" name="professional-development">Professional
+                                    Developments</option>
                             </select>
                         </div>
                     </div>
@@ -42,11 +44,12 @@
                         </div>
                         <div class="col-md-12">
                             <label class="labels">Description</label>
-                            <input type="text" id="description" name="description" class="form-control" placeholder="Description" value="">
+                            <input type="text" id="description" name="description" class="form-control"
+                                placeholder="Description" value="{{event.description}}">
                         </div>
                         <div class="form-group">
                             <label for="details">Event details</label>
-                            <textarea class="form-control" id="details" name="details">{{event.details}}</textarea>
+                            <textarea class="form-control" id="details" name="details" value="{{event.details}}">{{event.details}}</textarea>
                         </div>
                     </div>
                     <div class="mt-5 text-center">
@@ -54,6 +57,15 @@
                     </div>
                 </div>
             </div>
-            </div>
-        </form>
+        </div>
+    </form>
+    {{#if errors}}
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            {{#each errors}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
 </div>
