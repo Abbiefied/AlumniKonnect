@@ -9,6 +9,7 @@ const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const connectDB = require("./config/db");
+const { setLayout } = require("./controllers/authController");
 
 //Load config
 dotenv.config({ path: "./config/config.env" });
@@ -38,6 +39,12 @@ app.use(
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+//JQuery
+app.use(
+  "/jquery",
+  express.static(__dirname + "/node_modules/jquery/dist")
+);
 
 //Bootstrap
 app.use(
@@ -83,12 +90,18 @@ app.use(passport.session());
 
 //set global variable
 app.use(function (req, res, next) {
-  res.locals.user = req.user || null;
+  if (req.isAuthenticated()) {
+    res.locals.user = req.user || null;
+    console.log(req.user);
+  }
   next();
 });
 
 //Static folder
 app.use(express.static(path.join(__dirname, "public")));
+
+//Set Layout
+app.use(setLayout);
 
 //Routes
 app.use("/", require("./routes/index"));

@@ -1,28 +1,30 @@
-<h1>Events</h1>
-<div class="row">
-    {{#each events}}
-<div class="col s12 m4">
-    <div class="card">
-        <div class="card-image">
-            {{{editIcon user ../user _id}}}
+<div class="height-100">
+    <h1>Events</h1>
+    <div class="row">
+        {{#each events}}
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    {{{editIcon user ../user _id}}}
+                </div>
+            </div>
+            <div class="card-content center-align">
+                <h5>{{title}}</h5>
+                <p>{{stripTags details}}</p>
+                <br>
+                <div class="chip">
+                    <img src="{{user.image}}" alt="">
+                    <a href="/events/user/{{user._id}}">{{user.displayName}}
+                    </a>
+                </div>
+            </div>
+            <div class="card-action center-align">
+                <a href="/events/{{_id}}" class="btn grey">View Event</a>
+            </div>
         </div>
-    </div>
-    <div class="card-content center-align">
-        <h5>{{title}}</h5>
-        <p>{{stripTags details}}</p>
-        <br>
-        <div class="chip">
-            <img src="{{user.image}}" alt="">
-            <a href="/events/user/{{user._id}}">{{user.displayName}}
-            </a>
-        </div>
-    </div>
-    <div class="card-action center-align">
-        <a href="/events/{{_id}}" class="btn grey">View Event</a>
-    </div>
-</div>
 
-    {{else}}
+        {{else}}
         <p>No events to display</p>
-    {{/each}}
+        {{/each}}
+    </div>
 </div>

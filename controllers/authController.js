@@ -5,7 +5,7 @@ exports.googleAuth = passport.authenticate('google', { scope: ['profile']})
 exports.logout = (req, res, next) => {
     req.logout((error) => {
         if (error) {return next(error)}
-        res.redirect('/')
+        res.redirect('/login')
     })
 }
 
@@ -24,3 +24,14 @@ exports.ensureGuest = function (req, res, next) {
             }
         }
 
+exports.setLayout = function (req, res, next) {
+            if (req.isAuthenticated()) {
+              res.locals.layout = 'main';
+            } else {
+              res.locals.layout = 'guest';
+            }
+            return next();
+          }
+          
+          
+          

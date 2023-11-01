@@ -16,5 +16,4 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
 
 //Logout user
 router.get('/logout', controller.logout)
-
 module.exports = router

@@ -1,13 +1,12 @@
 const { validationResult } = require("express-validator");
 const Event = require("../models/Event");
 const { ensureAuth } = require("./authController");
-const { validateEvent } = require("./middleware/validators");
-const { event } = require("jquery");
+const { validateEvent } = require("../middleware/validators");
 
 exports.add_event =
   (ensureAuth,
   (req, res) => {
-    res.render("events/add", { errors: [] });
+    res.render("events/add", { errors: [], image: req.user.image });
   });
 
 //process add form
@@ -22,7 +21,7 @@ exports.process_add = [
     } catch (error) {
       if (error.name === "ValidationError") {
         const errors = Object.values(error.errors).map((e) => e.message);
-        return res.render("events/add", { errors, formData: req.body });
+        return res.render("events/add", { errors, formData: req.body, image: req.user.image });
       }
       console.error(error);
       res.render("error/500");
@@ -40,7 +39,7 @@ exports.show_events =
         .lean();
 
       res.render("events/allevents", {
-        events,
+        events, image: req.user.image
       });
     } catch (error) {
       console.error(error);
@@ -61,7 +60,7 @@ exports.view_events =
         res.render("error/404");
       } else {
         res.render("events/show", {
-          event,
+          event, image: req.user.image
         });
       }
     } catch (error) {
@@ -86,7 +85,7 @@ exports.edit_eventpage =
         res.redirect("/events");
       } else {
         res.render("events/edit", {
-          event: event 
+          event: event, image: req.user.image
         });
       }
     } catch (error) {
@@ -122,7 +121,8 @@ exports.update_event = [
         return res.render("events/edit", {
           errors,
           formData: req.body,
-          event: existingEvent
+          event: existingEvent,
+          image: req.user.image
         });
       }
       console.error(error);
@@ -165,7 +165,7 @@ exports.user_event =
         .lean();
 
       res.render("events/allevents", {
-        events,
+        events, image: req.user.image
       });
     } catch (error) {
       console.error(error);
