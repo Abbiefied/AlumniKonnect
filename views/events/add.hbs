@@ -1,3 +1,4 @@
+ <div class="height-100">
 <div class="container rounded bg-white mt-5 mb-5">
     <form action="/events" method="POST">
         <div class="row">
@@ -19,7 +20,7 @@
                         <div class="col-md-12">
                             <label class="labels">Title</label>
                             <input type="text" id="title" name="title" class="form-control" placeholder="Event title"
-                                value="{{formData.title}}">
+                                value="{{event.title}}">
                         </div>
                         <div class="input-group mb-2 mt-2">
                             <select class="custom-select" id="category" name="category">
@@ -33,10 +34,10 @@
                     </div>
                     <div class="row mt-3">
                         <div class="input-group mb-3">
-                            <select class="custom-select" id="status">
+                            <select class="custom-select" id="status" name="status">
                                 <option selected>Status</option>
-                                <option value="{{formData.status}}">Private</option>
-                                <option value="{{formData.status}}">Public</option>
+                                <option value="private" name="private">Private</option>
+                                <option value="public" name="public">Public</option>
                             </select>
                         </div>
                         <div class="col-md-12">
@@ -66,3 +67,4 @@
   </div>
 {{/if}}
 </div>
+ </div>
