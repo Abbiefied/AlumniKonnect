@@ -1,4 +1,3 @@
-const { validationResult } = require("express-validator");
 const Event = require("../models/Event");
 const { ensureAuth } = require("./authController");
 const { validateEvent } = require("../middleware/validators");

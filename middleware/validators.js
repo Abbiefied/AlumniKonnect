@@ -4,8 +4,11 @@ exports.validateEvent = (req, res, next) => {
   body('title').notEmpty().withMessage('Title is required');
   body('category').notEmpty().withMessage('Category is required');
   body('status').notEmpty().withMessage('Status is required');
+  body('eventImage').notEmpty().withMessage('Event image is required');
+  body('location').notEmpty().withMessage('Location is required');
+  body('eventDate').notEmpty().withMessage('Event date is required');
   body('description').notEmpty().withMessage('Description is required');
-  body('details').notEmpty().withMessage('Details are required');
+  body('details').notEmpty().withMessage('Details is required');
 
   const errors = validationResult(req);
 

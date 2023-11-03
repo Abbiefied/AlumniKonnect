@@ -23,6 +23,18 @@ const EventSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Details is required']
     },
+    location: {
+        type: String,
+        required: [true, 'Location is required']
+    },
+    eventDate: {
+        type: Date,
+        required: [true, 'Date is required']
+    },
+    eventImage:{
+        type: String,
+        required: [true, 'Event image is required']
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

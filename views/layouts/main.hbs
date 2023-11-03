@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-  
   {{! FontAwesome }}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
@@ -14,13 +12,14 @@
   <link rel="stylesheet" href="/css/style.css">
   <title>AlumniKonnect</title>
 </head>
-
 <body>
   {{> _header}}
-  <div class="container">
     <div id="body-pd">
     {{> _side_bar}}
+    <div class="container ps-5 pt-5">
+      <div class="row mx-auto d-flex justify-content-center ps-5">
     {{{body}}}
+    </div>
     </div>
   </div>
 
@@ -29,9 +28,9 @@
   <script src="/jquery/jquery.min.js"></script>
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/sidebarController.js"></script>
+  <script src="/script.js"></script>
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
   
-
   <script>
     ClassicEditor
       .create(document.querySelector('#details'))
@@ -40,5 +39,4 @@
       });
   </script>
 </body>
-
 </html>

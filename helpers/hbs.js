@@ -11,7 +11,7 @@ module.exports = {
     editIcon: function (eventUser, loggedUser, eventId, floating = true) {
         if (eventUser._id.toString() == loggedUser._id.toString()) {
           if (floating) {
-            return `<a href="/events/edit/${eventId}" class="btn-floating halfway-fab blue"><i class="fas fa-edit fa-small"></i></a>`
+            return `<a href="/events/edit/${eventId}" class="btn-floating"><i class="fas fa-edit fa-small"></i></a>`
           } else {
             return `<a href="/events/edit/${eventId}"><i class="fas fa-edit"></i></a>`
           }
