@@ -1,7 +1,8 @@
 const express = require("express")
 const router = express.Router()
+const upload = require('../config/multer');
 const eventController = require('../controllers/eventController')
-
+const uploadSingle = upload.single('eventImage');
 // Show add event page
 router.get("/add", eventController.add_event);
 

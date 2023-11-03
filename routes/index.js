@@ -6,9 +6,13 @@ const Event = require("../models/Event");
 
 // Landing page
 router.get("/", (req, res) => {
-  res.render("./guest/index", {
-    image: req.user.image,
-  });
+  if (req.isAuthenticated()) {
+    res.render("./guest/index", {
+      image: req.user.image,
+    });
+  } else {
+    res.render("./guest/index");
+  }
 });
 
 // Signup page
@@ -18,7 +22,9 @@ router.get("/signup", (req, res) => {
 
 // Login
 router.get("/login", ensureGuest, (req, res) => {
-  res.render("login");
+  res.render("login", {
+    layout: "login",
+  });
 });
 
 // About page
@@ -52,6 +58,12 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
     console.error(error);
     res.render("error/500");
   }
+});
+
+router.get("/gallery", (req, res) => {
+  res.render("./events/gallery", {
+    image: req.user.image
+  });
 });
 
 module.exports = router;

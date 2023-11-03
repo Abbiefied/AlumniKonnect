@@ -1,11 +1,9 @@
-
- <div class="height-100">
 <h6>Dashboard</h6>
 <h3>Welcome {{name}}</h3>
 {{> _add_btn}}
 <p>All events</p>
 {{#if events}}
-<table class="striped">
+<table class="striped custom-table">
     <thead>
         <tr>
             <th>Title</th>
@@ -21,14 +19,14 @@
             <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
             <td><span class="dash-status">{{status}}</span></td>
             <td>
-                <a href="/events/edit/{{_id}}" class="btn btn-float">
+                <a href="/events/edit/{{_id}}" class="btn btn-float mb-1">
                     <i class="fas fa-edit"></i>
                 </a>
 
                 <form action="/events/{{_id}}" method="POST" id="delete-form">
                     <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn red">
-                        <i class="fas fa-trash"></i>
+                    <button type="submit" class="btn bg-danger">
+                        <i class="fas fa-trash mt-1"></i>
                     </button>
                 </form>
             </td>
@@ -39,4 +37,3 @@
 {{else}}
 <p>You have not created any events.</p>
 {{/if}}
-</div>

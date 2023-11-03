@@ -5,7 +5,7 @@ exports.googleAuth = passport.authenticate('google', { scope: ['profile']})
 exports.logout = (req, res, next) => {
     req.logout((error) => {
         if (error) {return next(error)}
-        res.redirect('/login')
+        res.redirect('/')
     })
 }
 
