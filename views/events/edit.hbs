@@ -1,7 +1,6 @@
- <div class="height-100">
+<div class="height-100">
     <div class="container rounded bg-white mt-5 mb-5">
-        <form action="/events/{{event._id}}" method="POST" type="multipart/form-data">
-        <input type="hidden" name="_method" value="PUT">
+        <form method="POST" action="/events/{{event._id}}?_method=PUT" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-5 border-right">
                     <div class="p-3 py-5">
@@ -15,30 +14,30 @@
                                     placeholder="Event title" value="{{event.title}}">
                             </div>
                             <div class="mb-3">
-                            <label for="category" class="form-label">Category</label>
-                            <select class="custom-select" id="category" name="category" value="{{event.category}}">
-                                <option value="networking" name="networking">Networking</option>
-                                <option value="campus-events" name="campus-events">Campus Events</option>
-                                <option value="professional-development" name="professional-development">
-                                    Professional
-                                    Developments</option>
-                            </select>
+                                <label for="category" class="form-label">Category</label>
+                                <select class="custom-select" id="category" name="category" value="{{event.category}}">
+                                    <option value="networking" name="networking">Networking</option>
+                                    <option value="campus-events" name="campus-events">Campus Events</option>
+                                    <option value="professional-development" name="professional-development">
+                                        Professional
+                                        Developments</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="custom-select" id="status" name="status" value="{{event.status}}">
-                                 {{#select event.status}}
-                                <option value="private" name="private">Private</option>
-                                <option value="public" name="public">Public</option>
-                                {{/select}}
-                            </select>
+                                <label for="status" class="form-label">Status</label>
+                                <select class="custom-select" id="status" name="status" value="{{event.status}}">
+                                    {{#select event.status}}
+                                    <option value="private" name="private">Private</option>
+                                    <option value="public" name="public">Public</option>
+                                    {{/select}}
+                                </select>
                             </div>
                             <div class="mb-3">
-                             <label for="location" class="form-label">Location</label>
-                            <input type="text" id="location" name="location" class="form-control"
-                                placeholder="Event Location" value="{{event.location}}" required>
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" id="location" name="location" class="form-control"
+                                    placeholder="Event Location" value="{{event.location}}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="eventDate" class="form-label">Date and Time</label>
@@ -47,22 +46,22 @@
                             </div>
                             <div class="mb-3">
                                 <label for="eventImage" class="form-label">Upload Image</label>
-                                <input type="file" id="eventImage" name="eventImage" accept="image/*"
-                                    value="{{event.eventImage}}" required>
+                                <input type="file" id="eventImage" name="eventImage" value="{{formData.eventImage}}" accept="image/*" required>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea id="description" name="description" class="form-control"
-                                    placeholder="Description" value="{{event.description}}" rows="4"></textarea>
-                                    </div>
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea id="description" name="description" class="form-control"
+                                        placeholder="Description" value="{{event.description}}"
+                                        rows="4">{{event.description}}</textarea>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="details">Event details</label>
                                 <textarea class="form-control" id="details" name="details"
-                                    value="{{event.details}}"></textarea>
+                                    value="{{event.details}}">{{event.details}}</textarea>
                             </div>
-                            
+
                         </div>
                         <div class="mt-5 text-center">
                             <input type="submit" value="Edit Event" class="btn btn-primary profile-button">
@@ -91,5 +90,3 @@
         {{/if}}
     </div>
 </div>
- 
- 
