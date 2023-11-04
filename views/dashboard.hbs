@@ -23,8 +23,7 @@
                     <i class="fas fa-edit"></i>
                 </a>
 
-                <form action="/events/{{_id}}" method="POST" id="delete-form">
-                    <input type="hidden" name="_method" value="DELETE">
+                <form action="/events/{{_id}}?_method=DELETE" method="POST" id="delete-form">
                     <button type="submit" class="btn bg-danger">
                         <i class="fas fa-trash mt-1"></i>
                     </button>

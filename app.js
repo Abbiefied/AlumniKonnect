@@ -26,15 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Method override
-app.use(
-  methodOverride(function (req, res) {
-    if (req.body && typeof req.body === "object" && "_method" in req.body) {
-      let method = req.body._method;
-      delete req.body._method;
-      return method;
-    }
-  })
-);
+app.use(methodOverride('_method'));
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
