@@ -19,16 +19,16 @@ AlumniKonnect is a web application that facilitates communication and collaborat
 2. **Install Dependencies:**
    npm install
 3. **Set up Environment Variables:** 
-   Replace the environment variables in the config.env file with yours. 
-   The variables in the file now are for development purpose only.
-   MONGO_URI=your_mongo_db_uri
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   SESSION_SECRET=your_session_secret
+   - Replace the environment variables in the config.env file with yours. 
+   - The variables in the file now are for development purpose only.
+   - MONGO_URI=your_mongo_db_uri
+   - GOOGLE_CLIENT_ID=your_google_client_id
+   - GOOGLE_CLIENT_SECRET=your_google_client_secret
+   - SESSION_SECRET=your_session_secret
 
 4. **Usage:**
-   npm start
-   Visit http://localhost:3000 in your web browser.
+   - npm start
+   - Visit http://localhost:3000 in your web browser.
 
 5. **Contributing:**
-   This project is not accepting contributions.
+   - This project is not accepting contributions.
