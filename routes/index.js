@@ -15,17 +15,7 @@ router.get("/", (req, res) => {
   }
 });
 
-// Signup page
-router.get("/signup", (req, res) => {
-  res.render("./guest/signup");
-});
 
-// Login
-router.get("/login", ensureGuest, (req, res) => {
-  res.render("login", {
-    layout: "login",
-  });
-});
 
 // About page
 router.get("/about", (req, res) => {

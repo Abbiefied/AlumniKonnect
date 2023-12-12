@@ -399,6 +399,14 @@ h5 span{
   transform-style: preserve-3d;
   transition: all 600ms ease-out; 
 }
+.card-3d-wrap.show-login .card-3d-wrapper {
+  transform: rotateY(0deg);
+}
+
+.card-3d-wrap:not(.show-login) .card-3d-wrapper {
+  transform: rotateY(180deg);
+}
+
 .card-front, .card-back {
   width: 100%;
   height: 100%;

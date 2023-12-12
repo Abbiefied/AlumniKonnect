@@ -3,11 +3,9 @@ const mongoose = require('mongoose')
 const UserSchema = new mongoose.Schema({
     googleId: {
         type: String,
-        required: true
     },
     displayName: {
         type: String,
-        required: true
     },
     firstName: {
         type: String,
@@ -17,9 +15,22 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
     image: {
         type: String,
     },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user',
+      },
     createdAt: {
         type: Date,
         default: Date.now

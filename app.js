@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
+const flash = require('connect-flash');
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const exphbs = require("express-handlebars");
@@ -67,8 +68,8 @@ app.set("view engine", ".hbs");
 app.use(
   session({
     secret: "flying mouse",
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     store: new MongoStore({
       mongoUrl: process.env.MONGO_URI,
       mongooseConnection: mongoose.connection,
@@ -80,11 +81,18 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Connect flash
+app.use(flash());
+
 //set global variable
 app.use(function (req, res, next) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user || null;
   }
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.errors = req.flash('errors');
+  res.locals.error = req.flash('error');
   next();
 });
 

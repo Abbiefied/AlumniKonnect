@@ -1,39 +1,68 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-const mongoose = require('mongoose')
+const LocalStrategy = require('passport-local').Strategy;
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+//Load User Model
 const User = require('../models/User')
 
 module.exports = function(passport) {
+    // Local strategy
+    passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+        // Match User
+        User.findOne({ email: email })
+            .then(user => {
+                console.log(user);
+                if (!user) {
+                    return done(null, false, { message: 'The email provided is not registered' });
+                }
+
+                // Match Password
+                bcrypt.compare(password, user.password, (err, isMatch) => {
+                    if (err) throw err;
+
+                    if (isMatch) {
+                        return done(null, user);
+                    } else {
+                        return done(null, false, { message: 'Password is incorrect' });
+                    }
+                });
+            })
+            .catch(err => console.log(err));
+    }));
+
+    // Google strategy
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: '/auth/google/callback'
     },
-    async (accessToken, refreshedToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
         const newUser = {
             googleId: profile.id,
             displayName: profile.displayName,
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
             image: profile.photos[0].value
-        }
+        };
         try {
-            let user = await User.findOne({ googleId: profile.id})
+            let user = await User.findOne({ googleId: profile.id });
 
-            if(user) {
-                done(null, user)
+            if (user) {
+                done(null, user);
             } else {
-                user = await User.create(newUser)
-                done(null, user)
+                user = await User.create(newUser);
+                done(null, user);
             }
         } catch (error) {
-            console.error(error)
-            
+            console.error(error);
+            done(error, null);
         }
-    }))
+    }));
 
     passport.serializeUser((user, done) => {
-        done(null, user.id)
-    })
+        done(null, user.id);
+    });
 
     passport.deserializeUser(async (id, done) => {
         try {
@@ -42,6 +71,5 @@ module.exports = function(passport) {
         } catch (error) {
             done(error, null);
         }
-    })
-
-}
+    });
+};

@@ -6,6 +6,24 @@ document.addEventListener('DOMContentLoaded', function() {
       alert(successMessage);
   }
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const showSignup = urlParams.get('show') === 'signup';
+
+    const authCard = document.getElementById('authCard');
+    const checkbox = document.getElementById('reg-log');
+
+    if (authCard && checkbox) {
+      checkbox.checked = showSignup; // Set the checkbox based on the URL parameter
+
+      checkbox.addEventListener('change', function () {
+        authCard.classList.toggle('show-login', !checkbox.checked);
+      });
+    }
+ });
+
+
+
 
 // // document.getElementById('image').addEventListener('change', function() {
 // //     const preview = document.getElementById('event-preview');

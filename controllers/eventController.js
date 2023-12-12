@@ -2,13 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const upload = require("../config/multer");
 const Event = require("../models/Event");
-const { ensureAuth } = require("./authController");
+const { ensureAuth, isAdmin } = require("./authController");
 const { validateEvent } = require("../middleware/validators");
 
 const uploadSingle = upload.single("eventImage");
 
 exports.add_event =
   (ensureAuth,
+    isAdmin,
   (req, res) => {
     res.render("events/add", { errors: [], image: req.user.image });
   });
@@ -16,6 +17,7 @@ exports.add_event =
 //process add form
 exports.process_add = [
   ensureAuth,
+  isAdmin,
   uploadSingle,
   validateEvent,
   async (req, res) => {
@@ -42,6 +44,7 @@ exports.process_add = [
 
 exports.show_events =
   (ensureAuth,
+    isAdmin,
   async (req, res) => {
     try {
       const events = await Event.find({ status: "public" })
@@ -61,6 +64,7 @@ exports.show_events =
 
 exports.view_events =
   (ensureAuth,
+    isAdmin,
   async (req, res) => {
     try {
       let event = await Event.findById(req.params.id).populate("user").lean();
@@ -84,6 +88,7 @@ exports.view_events =
 
 exports.edit_eventpage =
   (ensureAuth,
+    isAdmin,
   async (req, res) => {
     try {
       const event = await Event.findOne({
@@ -114,6 +119,7 @@ exports.edit_eventpage =
 
 exports.update_event = [
   ensureAuth,
+  isAdmin,
   uploadSingle, // Multer middleware for file upload
   validateEvent,
   async (req, res) => {
@@ -172,6 +178,7 @@ exports.update_event = [
 
 exports.delete_event =
   (ensureAuth,
+    isAdmin,
   async (req, res) => {
     try {
       let event = await Event.findById(req.params.id).lean();
@@ -197,6 +204,7 @@ exports.delete_event =
 
 exports.user_event =
   (ensureAuth,
+    isAdmin,
   async (req, res) => {
     try {
       const events = await Event.find({
