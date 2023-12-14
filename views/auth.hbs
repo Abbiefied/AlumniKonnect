@@ -1,0 +1,85 @@
+<div class="section">
+    <div class="container">
+        <div class="row full-height justify-content-center">
+            <div class="col-12 text-center align-self-center py-5">
+                <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                    <h5 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h5>
+                    <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+                    <label for="reg-log"></label>
+                    <a class="navbar-brand mb-2" href="/">Welcome to AlumniKonnect</a>
+                    {{> _form_error}}
+                    <div class="card-3d-wrap mx-auto show-login" id="authCard">
+                        <div class="card-3d-wrapper">
+                                <div class="card-front" id="login">
+                                    <form action="/auth" method="POST">
+                                    <div class="center-wrap">
+                                        <div class="section text-center">
+                                            <h4 class="mb-4 pb-3">Log In</h4>
+                                            <div class="form-group">
+                                                <input type="email" name="email" class="form-style"
+                                                    placeholder="Your Email" id="logemail" autocomplete="off" value="{{#if email}}{{email}}{{else}}{{''}}{{/if}}">
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="password" class="form-style"
+                                                    placeholder="Your Password" id="logpass" autocomplete="off">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <input type="submit" value="Login" class="btn btn-primary profile-button">
+                                            <div class="section">
+                                                <a href="/auth/google" class="btn">
+                                                    <i class="fa-brands fa-google me-1" style="color: #d44040;"></i>Log
+                                                    in
+                                                    with Google
+                                                </a>
+                                            </div>
+                                            <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your
+                                                    password?</a></p>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            
+                            <div class="card-back" id="signup">
+                                <form action="/auth" method="POST">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="mb-4 pb-3">Sign Up</h4>
+                                        <div class="form-group">
+                                            <input type="text" name="firstName" class="form-style"
+                                                placeholder="Firstname" id="firstName" autocomplete="off" value="{{#if firstName}}{{firstName}}{{else}}{{''}}{{/if}}">
+                                            <i class="input-icon uil uil-user"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="name" name="lastName" class="form-style" placeholder="Lastname"
+                                                id="lastName" autocomplete="off" value="{{#if name}}{{name}}{{else}}{{''}}{{/if}}">
+                                            <i class="input-icon uil uil-user"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="email" name="email" class="form-style" placeholder="Email"
+                                                id="email" autocomplete="off">
+                                            <i class="input-icon uil uil-at"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="password" name="password" class="form-style"
+                                                placeholder="Password" id="password" autocomplete="off">
+                                            <i class="input-icon uil uil-lock-alt"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="password" name="password2" class="form-style"
+                                                placeholder="Confirm password" id="password2 " autocomplete="off">
+                                            <i class="input-icon uil uil-lock-alt"></i>
+                                        </div>
+                                        <input type="hidden" name="signup" value="true">
+                                        <input type="submit" value="Sign up" class="btn btn-primary profile-button">
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

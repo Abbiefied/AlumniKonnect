@@ -1,9 +1,11 @@
-<h6>Dashboard</h6>
-<h3>Welcome {{name}}</h3>
+<h4>Alumni Dashboard</h4>
+<h3>Welcome, {{firstName}}</h3>
+{{> _profile}}
 {{> _add_btn}}
-<p>All events</p>
+<div class="container-fluid your-events pt-3">
+<h3>Your events</h3>
 {{#if events}}
-<table class="striped custom-table">
+<table class="striped custom-table w-100">
     <thead>
         <tr>
             <th>Title</th>
@@ -36,3 +38,4 @@
 {{else}}
 <p>You have not created any events.</p>
 {{/if}}
+</div>

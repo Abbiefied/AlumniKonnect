@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
+const flash = require('connect-flash');
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const exphbs = require("express-handlebars");
@@ -9,7 +10,7 @@ const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const connectDB = require("./config/db");
-const { setLayout } = require("./controllers/authController");
+const { setLayout, ensureAuth, isAdmin } = require("./controllers/authController");
 
 //Load config
 dotenv.config({ path: "./config/config.env" });
@@ -24,6 +25,7 @@ const app = express();
 //Body Parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
 
 // Method override
 app.use(methodOverride('_method'));
@@ -80,11 +82,18 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Connect flash
+app.use(flash());
+
 //set global variable
 app.use(function (req, res, next) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user || null;
   }
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.errors = req.flash('errors');
+  res.locals.error = req.flash('error');
   next();
 });
 
@@ -97,7 +106,11 @@ app.use(setLayout);
 //Routes
 app.use("/", require("./routes/index"));
 app.use("/auth", require("./routes/auth"));
-app.use("/events", require("./routes/events"));
+app.use("/events", ensureAuth, require("./routes/events"));
+app.use("/admin", isAdmin, require("./routes/admin"));
+app.use("/alumni", ensureAuth, require("./routes/alumni"));
+
+
 
 const PORT = process.env.PORT || 3000;
 

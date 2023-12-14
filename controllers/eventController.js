@@ -24,7 +24,8 @@ exports.process_add = [
       req.body.eventImage = req.file.filename;
 
       await Event.create(req.body);
-      res.redirect("/dashboard?success=Event created successfully");
+      req.flash('success_msg', 'Event created successfully!');
+      res.redirect("/dashboard");
     } catch (error) {
       if (error.name === "ValidationError") {
         const errors = Object.values(error.errors).map((e) => e.message);
@@ -59,7 +60,7 @@ exports.show_events =
     }
   });
 
-exports.view_events =
+exports.view_event =
   (ensureAuth,
   async (req, res) => {
     try {
@@ -82,6 +83,7 @@ exports.view_events =
     }
   });
 
+// View edit event page
 exports.edit_eventpage =
   (ensureAuth,
   async (req, res) => {
@@ -152,7 +154,7 @@ exports.update_event = [
         updatedEventData,
         { new: true, runValidators: true }
       );
-
+      req.flash('success_msg', 'Event updated successfully!');
       res.redirect("/dashboard");
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -187,7 +189,8 @@ exports.delete_event =
           fs.unlinkSync(path.join(__dirname, '../public/uploads/', event.eventImage));
         }
         await Event.deleteOne({ _id: req.params.id });
-        res.redirect("/dashboard?success=Event deleted successfully");
+        req.flash('success_msg', 'Event deleted successfully!')
+        res.redirect("/dashboard");
       }
     } catch (error) {
       console.error(error);

@@ -2,27 +2,29 @@
     <h1>Events</h1>
     <div class="row">
         {{#each events}}
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <div class="card-img-top" style="height: 300px; background-image: url('/uploads/{{eventImage}}'); background-size: cover;"></div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title">{{title}}</h5>
-                            <div class="card-icon">
-                                {{{editIcon user ../user _id}}}
-                            </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-img-top"
+                    style="height: 300px; background-image: url('/uploads/{{eventImage}}'); background-size: cover;">
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">{{title}}</h5>
+                        <div class="card-icon">
+                            {{{editIcon user ../user _id isAdmin}}}
                         </div>
-                        <p class="card-text">{{stripTags details}}</p>
                     </div>
-                    <div class="card-footer text-center">
-                        <small class="text-muted">Location: {{location}}</small><br>
-                        <small class="text-muted">Date: {{eventDate}}</small><br>
-                        <a href="/events/{{_id}}" class="btn btn-primary">View Event</a>
-                    </div>
+                    <p class="card-text">{{stripTags details}}</p>
+                </div>
+                <div class="card-footer text-center">
+                    <small class="text-muted">Location: {{location}}</small><br>
+                    <small class="text-muted">Date: {{eventDate}}</small><br>
+                    <a href="/events/{{_id}}" class="btn btn-primary">View Event</a>
                 </div>
             </div>
+        </div>
         {{else}}
-            <p>No events to display</p>
+        <p>No events to display</p>
         {{/each}}
     </div>
 </div>

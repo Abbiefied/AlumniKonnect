@@ -2,29 +2,31 @@ const express = require("express")
 const router = express.Router()
 const upload = require('../config/multer');
 const eventController = require('../controllers/eventController')
+const { ensureAuth } = require('../controllers/authController')
 const uploadSingle = upload.single('eventImage');
+
 // Show add event page
-router.get("/add", eventController.add_event);
+router.get("/add", ensureAuth, eventController.add_event);
 
 // Process add event form
-router.post("/", eventController.process_add);
+router.post("/", ensureAuth, eventController.process_add);
 
 // Show all event page
-router.get("/", eventController.show_events);
+router.get("/", ensureAuth, eventController.show_events);
 
 // View event full detail
-router.get("/:id", eventController.view_events);
+router.get("/:id", ensureAuth, eventController.view_event);
 
 // Edit event page
-router.get("/edit/:id", eventController.edit_eventpage);
+router.get("/edit/:id", ensureAuth, eventController.edit_eventpage);
 
 // Update event
-router.put("/:id", eventController.update_event);
+router.put("/:id", ensureAuth, eventController.update_event);
 
 // Delete event
-router.delete("/:id", eventController.delete_event);
+router.delete("/:id", ensureAuth, eventController.delete_event);
 
 // Get Events created by a user
-router.get("/user/:userid", eventController.user_event);
+router.get("/user/:userid", ensureAuth, eventController.user_event);
 
 module.exports = router;

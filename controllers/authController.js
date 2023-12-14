@@ -13,7 +13,7 @@ exports.ensureAuth = function (req, res, next) {
         if (req.isAuthenticated()) {
             return next()
         } else {
-            res.redirect('/login')
+            res.redirect('/auth')
         }
         }
 exports.ensureGuest = function (req, res, next) {
@@ -23,9 +23,19 @@ exports.ensureGuest = function (req, res, next) {
                 return next()
             }
         }
+exports.isAdmin = function (req, res, next) {
+  if (req.isAuthenticated() && req.user.role === 'admin') {
+    console.log('Admin user detected.');
+    return next();
+} else {
+    res.redirect('/');
+}
+};
 
 exports.setLayout = function (req, res, next) {
-            if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.user.role === 'admin') {
+    res.locals.layout = 'admin';
+  } else if (req.isAuthenticated()) {
               res.locals.layout = 'main';
             } else {
               res.locals.layout = 'guest';

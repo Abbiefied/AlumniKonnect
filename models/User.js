@@ -3,11 +3,9 @@ const mongoose = require('mongoose')
 const UserSchema = new mongoose.Schema({
     googleId: {
         type: String,
-        required: true
     },
     displayName: {
         type: String,
-        required: true
     },
     firstName: {
         type: String,
@@ -17,9 +15,37 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,  
+        lowercase: true
+    },
+    password: {
+        type: String,
+        required: function() {
+            // Only required if the user is not authenticated via Google
+            return !this.googleId;
+        }
+    },
     image: {
         type: String,
     },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user',
+      },
+      phone: {
+        type: String,
+      },
+      highestDegree: {
+        type: String,
+      },
+      bio: {
+        type: String,
+      },
     createdAt: {
         type: Date,
         default: Date.now
