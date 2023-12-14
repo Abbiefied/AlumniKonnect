@@ -1,27 +1,27 @@
 <div class="height-100">
-        <div class="col-lg-8">
-            <h3>{{event.title}}
-                <small>{{{editIcon event.user event event._id false}}}</small>
-            </h3>
-            <div class="card event">
-                <div class="card-image">
-                    <img src="/uploads/{{event.eventImage}}" alt="{{event.title}}">
-                </div>
-                <div class="card-content">
-                    <h5>Event Details</h5>
-                    <p>{{{event.details}}}</p>
-                    <h5>Date & Time</h5>
-                    <p>{{formatDate event.eventDate 'MMMM Do YYYY, h:mm:ss a'}}</p>
-                    <h5>Location</h5>
-                    <p>{{event.location}}</p>
-                    <h5>Category</h5>
-                    <p>{{event.category}}</p>
-                    <h5>Host</h5>
-                    <p>{{event.user.displayName}}</p>
-                    <h5>RSVP</h5>
-                    <p>RSVP: {{event.user.displayName}}</p>
-                    <a href="#" class="btn btn-primary">Register</a>
-                </div>
+    <div class="col-lg-8">
+        <h3>{{event.title}}
+            <small>{{{editIcon user ../user _id user.isAdmin false}}}</small>
+        </h3>
+        <div class="card event">
+            <div class="card-image">
+                <img src="/uploads/{{event.eventImage}}" alt="{{event.title}}">
+            </div>
+            <div class="card-content">
+                <h5>Event Details</h5>
+                <p>{{{event.details}}}</p>
+                <h5>Date & Time</h5>
+                <p>{{formatDate event.eventDate 'MMMM Do YYYY, h:mm:ss a'}}</p>
+                <h5>Location</h5>
+                <p>{{event.location}}</p>
+                <h5>Category</h5>
+                <p>{{event.category}}</p>
+                <h5>Host</h5>
+                <p>{{event.user.firstName}}</p>
+                <h5>RSVP</h5>
+                <p>RSVP: {{event.user.firstName}}</p>
+                <a href="#" class="btn btn-primary">Register</a>
             </div>
         </div>
+    </div>
 </div>

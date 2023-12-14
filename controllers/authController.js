@@ -24,18 +24,18 @@ exports.ensureGuest = function (req, res, next) {
             }
         }
 exports.isAdmin = function (req, res, next) {
-            if (req.isAuthenticated()) {
-              console.log('User Role:', req.user.role); // Add this line
-              if (req.user.role === 'admin') {
-                console.log('Admin user detected.'); // Add this line
-                return next();
-              }
-            }
-            res.redirect('/');
-        }
+  if (req.isAuthenticated() && req.user.role === 'admin') {
+    console.log('Admin user detected.');
+    return next();
+} else {
+    res.redirect('/');
+}
+};
 
 exports.setLayout = function (req, res, next) {
-            if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.user.role === 'admin') {
+    res.locals.layout = 'admin';
+  } else if (req.isAuthenticated()) {
               res.locals.layout = 'main';
             } else {
               res.locals.layout = 'guest';

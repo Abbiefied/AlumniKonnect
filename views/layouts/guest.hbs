@@ -15,10 +15,15 @@
 
 <body>
   {{> _guest_header}}
-  <div class="container">
+  <div class="container-fluid mt-5 pt-5">
+      <div class="row mx-auto d-flex justify-content-center">
     {{{body}}}
+    
+    <div class="spacer" style="height: 700px;"></div>
+      </div>
   </div>
 
+  {{> _footer}}
 
   <!---Script-->
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>

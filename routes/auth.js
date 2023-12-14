@@ -26,10 +26,9 @@ router.get(
   }
 );
 
-// Sign up
+// Sign up or Login
 router.post("/", (req, res, next) => {
   if ("signup" in req.body) {
-  console.log(req.body);
   const { firstName, lastName, email, password, password2 } = req.body;
   let errors = [];
 
@@ -78,13 +77,17 @@ router.post("/", (req, res, next) => {
         const newUser = new User({
           firstName,
           lastName,
-          email,
+          email: email.toLowerCase(),
           password,
         });
         //Hash password
         bcrypt.genSalt(10, (err, salt) =>
           bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if(err) throw err;
+            if(err)  {
+              console.error(err);
+              // Handle error response to the client
+              return res.render("error/500");
+            }
 
             //set hashed password
             newUser.password = hash;
@@ -93,20 +96,32 @@ router.post("/", (req, res, next) => {
               req.flash('success_msg', 'Sign up successful! Log in with your email and password.')
               res.redirect('/auth')
             })
-            .catch(err => console.log(err));
+            .catch((err) => {
+                  console.error(err);
+                  // Handle error response to the client
+                  res.render("error/500");
+                });
           }));
       }
     });
   }
  } else {
-    passport.authenticate('local',  {
-      successRedirect: '/dashboard',
-      failureRedirect: '/auth',
-      failureFlash: true
-    })(req, res, next);
-  }
+  passport.authenticate('local', {
+    failureRedirect: '/auth',
+    failureFlash: true
+})(req, res, () => {
+    // Check if the logged-in user is an admin
+    if (req.user && req.user.role === 'admin') {
+        // Redirect to the admin dashboard if the user is an admin
+        res.redirect('/admin/dashboard');
+    } else {
+        // Redirect to the regular dashboard if the user is not an admin
+        res.redirect('/dashboard');
+    }
+  });
+}
 });
 
 //Logout user
-router.get("/logout", controller.logout);
+router.get("/logout", ensureAuth, controller.logout);
 module.exports = router;

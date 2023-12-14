@@ -1,0 +1,37 @@
+<h6>Admin Dashboard</h6>
+<h3>Welcome {{name}}</h3>
+<p>All Events</p>
+{{#if events}}
+<table class="striped custom-table w-100">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each events}}
+        <tr>
+            <td><a href="/events/{{_id}}">{{title}}</a></td>
+            <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
+            <td><span class="dash-status">{{status}}</span></td>
+            <td>
+                    <a href="/events/edit/{{_id}}" class="btn btn-float mb-1">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+                    <form action="/events/{{_id}}?_method=DELETE" method="POST" id="delete-form">
+                        <button type="submit" class="btn bg-danger">
+                            <i class="fas fa-trash mt-1"></i>
+                        </button>
+                    </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+<p>No events available.</p>
+{{/if}}

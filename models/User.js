@@ -17,11 +17,17 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        trim: true,  
+        lowercase: true
     },
     password: {
         type: String,
-        required: true
+        required: function() {
+            // Only required if the user is not authenticated via Google
+            return !this.googleId;
+        }
     },
     image: {
         type: String,
@@ -30,6 +36,15 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ['user', 'admin'],
         default: 'user',
+      },
+      phone: {
+        type: String,
+      },
+      highestDegree: {
+        type: String,
+      },
+      bio: {
+        type: String,
       },
     createdAt: {
         type: Date,

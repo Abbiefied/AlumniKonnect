@@ -10,7 +10,7 @@ const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const connectDB = require("./config/db");
-const { setLayout } = require("./controllers/authController");
+const { setLayout, ensureAuth, isAdmin } = require("./controllers/authController");
 
 //Load config
 dotenv.config({ path: "./config/config.env" });
@@ -25,6 +25,7 @@ const app = express();
 //Body Parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
 
 // Method override
 app.use(methodOverride('_method'));
@@ -68,8 +69,8 @@ app.set("view engine", ".hbs");
 app.use(
   session({
     secret: "flying mouse",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     store: new MongoStore({
       mongoUrl: process.env.MONGO_URI,
       mongooseConnection: mongoose.connection,
@@ -105,7 +106,11 @@ app.use(setLayout);
 //Routes
 app.use("/", require("./routes/index"));
 app.use("/auth", require("./routes/auth"));
-app.use("/events", require("./routes/events"));
+app.use("/events", ensureAuth, require("./routes/events"));
+app.use("/admin", isAdmin, require("./routes/admin"));
+app.use("/alumni", ensureAuth, require("./routes/alumni"));
+
+
 
 const PORT = process.env.PORT || 3000;
 

@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { ensureAuth, ensureGuest } = require("../controllers/authController");
-
 const Event = require("../models/Event");
+const User = require('../models/User');
 
 // Landing page
 router.get("/", (req, res) => {
@@ -14,8 +14,6 @@ router.get("/", (req, res) => {
     res.render("./guest/index");
   }
 });
-
-
 
 // About page
 router.get("/about", (req, res) => {
@@ -35,25 +33,51 @@ router.get("/contact", (req, res) => {
   }
 });
 
-// Dashboard page
+// Alumni Dashboard page
 router.get("/dashboard", ensureAuth, async (req, res) => {
   try {
     const events = await Event.find({ user: req.user.id }).lean();
     res.render("dashboard", {
-      name: req.user.firstName,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      email: req.user.email,
       image: req.user.image,
+      phone: req.user.phone,
+      highestDegree: req.user.highestDegree,
+      bio: req.user.bio,
       events,
     });
+    console.log(req.user);
   } catch (error) {
     console.error(error);
     res.render("error/500");
   }
 });
 
+
 router.get("/gallery", (req, res) => {
   res.render("./events/gallery", {
     image: req.user.image
   });
+});
+
+router.post('/dashboard', ensureAuth, async (req, res) => {
+  try {
+    const { email, phone, highestDegree, bio } = req.body;
+
+    // Update user information
+    await User.findByIdAndUpdate(req.user.id, {
+      email,
+      phone,
+      highestDegree,
+      bio,
+    });
+
+    res.redirect('/dashboard');
+  } catch (error) {
+    console.error(error);
+    res.render('error/500');
+  }
 });
 
 module.exports = router;

@@ -1,0 +1,273 @@
+const fs = require("fs");
+const path = require("path");
+const upload = require("../config/multer");
+const Event = require("../models/Event");
+const User = require("../models/User");
+const { isAdmin } = require("./authController");
+const { validateEvent } = require("../middleware/validators");
+
+const uploadSingle = upload.single("eventImage");
+
+// Admin Dashboard
+exports.dashboard = async (req, res) => {
+  try {
+    const events = await Event.find({ user: req.user.id }).lean();
+    res.render("../views/admin/dashboard", {
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      email: req.user.email,
+      image: req.user.image,
+      phone: req.user.phone,
+      highestDegree: req.user.highestDegree,
+      bio: req.user.bio,
+      events,
+    });
+    console.log(req.user);
+  } catch (error) {
+    console.error(error);
+    res.render("error/500");
+  }
+};
+
+// Update profile
+exports.update_profile =
+  (isAdmin,
+  async (req, res) => {
+    try {
+      const { email, phone, highestDegree, bio } = req.body;
+
+      // Update user information
+      await User.findByIdAndUpdate(req.user.id, {
+        email,
+        phone,
+        highestDegree,
+        bio,
+      });
+      req.flash('success_msg', 'Profile updated successfully!');
+      res.redirect("/admin/dashboard");
+    } catch (error) {
+      console.error(error);
+      res.render("error/500");
+    }
+  });
+
+// Manage events
+exports.manage_events =
+  (isAdmin,
+  async (req, res) => {
+    try {
+      const events = await Event.find().lean();
+      res.render("admin/manage_events", {
+        name: req.user.firstName,
+        image: req.user.image,
+        events,
+      });
+    } catch (error) {
+      console.error(error);
+      res.render("error/500");
+    }
+  });
+
+//show all events
+exports.show_all_events =
+  (isAdmin,
+  async (req, res) => {
+    try {
+      const events = await Event.find()
+        .populate("user")
+        .sort({ createdAt: "desc" })
+        .lean();
+
+      res.render("admin/events", {
+        events,
+        image: req.user.image,
+        user: req.user,
+        role: req.user.role,
+      });
+    } catch (error) {
+      console.error(error);
+      res.render("/error/500");
+    }
+  });
+
+// Add event page route
+exports.add_event =
+  (isAdmin,
+  (req, res) => {
+    res.render("admin/add", { errors: [], image: req.user.image });
+  });
+
+//process add form
+exports.process_add = [
+  isAdmin,
+  uploadSingle,
+  validateEvent,
+  async (req, res) => {
+    try {
+      req.body.user = req.user.id;
+      req.body.eventImage = req.file.filename;
+
+      await Event.create(req.body);
+      req.flash('success_msg', 'Event created successfully!');
+      res.redirect("/admin/dashboard");
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        const errors = Object.values(error.errors).map((e) => e.message);
+        return res.render("events/add", {
+          errors,
+          formData: req.body,
+          image: req.user.image,
+        });
+      }
+      console.error(error);
+      res.render("error/500");
+    }
+  },
+];
+
+// View edit event page
+exports.edit_eventpage = async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      _id: req.params.id,
+    }).lean();
+
+    if (!event) {
+      return res.render("error/404");
+    }
+
+    const eventDate = event.eventDate.toISOString().split("T")[0];
+
+    res.render("./events/edit", {
+      event: event,
+      eventDate: eventDate,
+      eventImage: `/uploads/${event.eventImage}`,
+      image: req.user.image,
+    });
+  } catch (error) {
+    console.error(error);
+    res.render("error/500");
+  }
+};
+
+// Process edit event
+exports.update_event = [
+  isAdmin,
+  uploadSingle,
+  validateEvent,
+  async (req, res) => {
+    const existingEvent = await Event.findById(req.params.id).lean();
+    try {
+      if (!existingEvent) {
+        return res.render("error/404");
+      }
+
+      let updatedEventData = {
+        title: req.body.title,
+        description: req.body.description,
+        category: req.body.category,
+        status: req.body.status,
+        details: req.body.details,
+        location: req.body.location,
+        eventDate: req.body.eventDate,
+      };
+
+      if (req.file) {
+        // If a new file is uploaded, remove the old one
+        if (existingEvent.eventImage) {
+          fs.unlinkSync(
+            path.join(__dirname, "../public/uploads/", existingEvent.eventImage)
+          );
+        }
+        updatedEventData.eventImage = req.file.filename;
+      }
+
+      const updatedEvent = await Event.findOneAndUpdate(
+        { _id: req.params.id },
+        updatedEventData,
+        { new: true, runValidators: true }
+      );
+      req.flash('success_msg', 'Event updated successfully!');
+      // redirect to previous page
+      res.redirect("/admin/dashboard");
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        const errors = Object.values(error.errors).map((e) => e.message);
+        return res.render("events/edit", {
+          errors,
+          formData: req.body,
+          event: existingEvent,
+          image: req.user.image,
+        });
+      }
+      console.error(error);
+      res.render("error/500");
+    }
+  },
+];
+
+exports.delete_event =
+  (isAdmin,
+  async (req, res) => {
+    try {
+      let event = await Event.findById(req.params.id).lean();
+
+      if (!event) {
+        return res.render("error/404");
+      }
+
+        if (event.eventImage) {
+          fs.unlinkSync(path.join(__dirname, '../public/uploads/', event.eventImage));
+        }
+        await Event.deleteOne({ _id: req.params.id });
+        req.flash('success_msg', 'Event deleted successfully!')
+        res.redirect("/admin/dashboard");
+      }
+     catch (error) {
+      console.error(error);
+      return res.render("error/500");
+    }
+  });
+
+// Change profile picture
+exports.changeProfilePicture = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    // Check if the user has an existing profile picture
+    if (user.image) {
+      // Delete the old profile picture file
+      fs.unlinkSync(path.join(__dirname, `../public/uploads/${user.image}`));
+    }
+    // Update user's image property in the database with the new file name
+    user.image = req.file.filename;
+    await user.save();
+    req.flash('success_msg', 'Profile picture changed successfully!');
+    res.redirect("/admin/dashboard"); // Redirect to the dashboard
+  } catch (err) {
+    console.error(err);
+    res.render("error/500");
+  }
+};
+
+// Delete profile picture
+exports.deleteProfilePicture = async (req, res) => {
+  try {
+    // Find the user by ID
+    const user = await User.findById(req.user.id);
+
+    // Check if the user has an existing profile picture
+    if (user.image) {
+      // Delete the profile picture file
+      fs.unlinkSync(path.join(__dirname, `../public/uploads/${user.image}`));
+
+      // Update user's image property in the database to null
+      user.image = null;
+      await user.save();
+    }
+    req.flash('success_msg', 'Profile picture deleted successfully!');
+    res.redirect("/admin/dashboard"); // Redirect to the dashboard
+  } catch (err) {
+    console.error(err);
+    res.render("error/500");
+  }
+};
