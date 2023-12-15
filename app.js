@@ -11,7 +11,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const connectDB = require("./config/db");
 const { setLayout, ensureAuth, isAdmin } = require("./controllers/authController");
-
+const updateLastSeen = require("./middleware/session")
 //Load config
 dotenv.config({ path: "./config/config.env" });
 
@@ -23,7 +23,7 @@ connectDB();
 const app = express();
 
 //Body Parser
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
@@ -99,6 +99,10 @@ app.use(function (req, res, next) {
 
 //Static folder
 app.use(express.static(path.join(__dirname, "public")));
+
+  
+// Include this middleware in your application
+app.use(updateLastSeen);
 
 //Set Layout
 app.use(setLayout);

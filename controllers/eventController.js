@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const upload = require("../config/multer");
 const Event = require("../models/Event");
-const { ensureAuth } = require("./authController");
+const { ensureAuth, isAdmin } = require("./authController");
 const { validateEvent } = require("../middleware/validators");
 
 const uploadSingle = upload.single("eventImage");
@@ -60,6 +60,7 @@ exports.show_events =
     }
   });
 
+// View more details about an event
 exports.view_event =
   (ensureAuth,
   async (req, res) => {
@@ -114,6 +115,7 @@ exports.edit_eventpage =
     }
   });
 
+// Update event
 exports.update_event = [
   ensureAuth,
   uploadSingle, // Multer middleware for file upload
@@ -172,6 +174,7 @@ exports.update_event = [
   },
 ];
 
+// Delete event
 exports.delete_event =
   (ensureAuth,
   async (req, res) => {
@@ -198,6 +201,7 @@ exports.delete_event =
     }
   });
 
+// Events by a particular user
 exports.user_event =
   (ensureAuth,
   async (req, res) => {

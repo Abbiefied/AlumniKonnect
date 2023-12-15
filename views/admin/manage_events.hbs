@@ -14,24 +14,25 @@
     <tbody>
         {{#each events}}
         <tr>
-            <td><a href="/events/{{_id}}">{{title}}</a></td>
+            <td><a href="/admin/events/{{_id}}">{{title}}</a></td>
             <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
             <td><span class="dash-status">{{status}}</span></td>
             <td>
-                    <a href="/events/edit/{{_id}}" class="btn btn-float mb-1">
-                        <i class="fas fa-edit"></i>
-                    </a>
+                <a href="/admin/events/edit/{{_id}}" class="btn btn-float mb-1">
+                    <i class="fas fa-edit"></i>
+                </a>
 
-                    <form action="/events/{{_id}}?_method=DELETE" method="POST" id="delete-form">
-                        <button type="submit" class="btn bg-danger">
-                            <i class="fas fa-trash mt-1"></i>
-                        </button>
-                    </form>
+                <form action="/admin/event/{{_id}}?_method=DELETE" method="POST" id="delete-form">
+                    <button type="submit" class="btn bg-danger">
+                        <i class="fas fa-trash mt-1"></i>
+                    </button>
+                </form>
             </td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 {{else}}
-<p>No events available.</p>
+<p>No events availaible.</p>
 {{/if}}
+</div>

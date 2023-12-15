@@ -12,7 +12,7 @@ const uploadSingle = upload.single("eventImage");
 exports.dashboard = async (req, res) => {
   try {
     const events = await Event.find({ user: req.user.id }).lean();
-    res.render("../views/admin/dashboard", {
+    res.render("admin/dashboard", {
       firstName: req.user.firstName,
       lastName: req.user.lastName,
       email: req.user.email,
@@ -138,7 +138,7 @@ exports.edit_eventpage = async (req, res) => {
 
     const eventDate = event.eventDate.toISOString().split("T")[0];
 
-    res.render("./events/edit", {
+    res.render("admin/edit", {
       event: event,
       eventDate: eventDate,
       eventImage: `/uploads/${event.eventImage}`,
@@ -193,7 +193,7 @@ exports.update_event = [
     } catch (error) {
       if (error.name === "ValidationError") {
         const errors = Object.values(error.errors).map((e) => e.message);
-        return res.render("events/edit", {
+        return res.render("admin/edit", {
           errors,
           formData: req.body,
           event: existingEvent,
@@ -206,9 +206,7 @@ exports.update_event = [
   },
 ];
 
-exports.delete_event =
-  (isAdmin,
-  async (req, res) => {
+exports.delete_event = async (req, res) => {
     try {
       let event = await Event.findById(req.params.id).lean();
 
@@ -227,7 +225,45 @@ exports.delete_event =
       console.error(error);
       return res.render("error/500");
     }
-  });
+  };
+
+// View more details about an event
+exports.view_event = async (req, res) => {
+    try {
+      let event = await Event.findById(req.params.id).populate("user").lean();
+
+      if (!event) {
+        return res.render("error/404");
+      }
+        res.render("events/show", {
+          event,
+          image: req.user.image,
+        });
+      }
+    catch (error) {
+      console.error(error);
+      res.render("error/404");
+    }
+  };
+
+// Events by a particular user
+exports.user_event = async (req, res) => {
+    try {
+      const events = await Event.find({
+        user: req.params.userid,
+      })
+        .populate("user")
+        .lean();
+
+      res.render("events/allevents", {
+        events,
+        image: req.user.image,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.render("error/500");
+    }
+  };
 
 // Change profile picture
 exports.changeProfilePicture = async (req, res) => {
@@ -269,5 +305,78 @@ exports.deleteProfilePicture = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.render("error/500");
+  }
+};
+
+// Manage users
+exports.manageUsers = async (req, res) => {
+  try {
+    const users = await User.find().populate('numberOfEvents').lean();
+    res.render('admin/manageUsers', { users });
+  } catch (error) {
+    console.error(error);
+    res.render('error/500');
+  }
+};
+
+// View Edit user page
+exports.editUser = async (req, res) => {
+  try {
+    // Fetch user details based on ID
+    const user = await User.findById(req.params.id).lean();
+    console.log(user);
+    res.render('admin/editUser', { user });
+  } catch (error) {
+    console.error(error);
+    res.render('error/500');
+  }
+};
+
+// Update user
+exports.updateUser = async (req, res, next) => {
+  const userId = req.params.id; 
+  const { firstName, lastName, email } = req.body;
+
+  try {
+    if (req.body._method && req.body._method.toUpperCase() === 'PUT') {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { firstName, lastName, email },
+      { new: true, runValidators: true }
+    ).exec();
+
+    if (!updatedUser) {
+      req.flash('error_msg', 'User not found');
+      return res.redirect('/admin/manage-users');
+    }
+
+    req.flash('success_msg', 'User updated successfully');
+    res.redirect('/admin/manage-users'); 
+  }
+  } catch (error) {
+    console.error(error);
+    req.flash('error_msg', 'Internal Server Error');
+    res.redirect('/admin/manage-users'); 
+  }
+};
+
+// Delete user
+exports.deleteUser = async (req, res, next) => {
+  const userId = req.params.id;
+
+  try {
+    const deletedUser = await User.findByIdAndDelete(userId).exec();
+
+    if (!deletedUser) {
+      req.flash('error', 'User not found');
+      return res.redirect('/admin/manage-users');
+    }
+
+    req.flash('success_msg', 'User deleted successfully!');
+    res.redirect('/admin/manage-users');
+  } catch (error) {
+    console.error(error);
+    req.flash('error', 'Internal Server Error');
+    res.redirect('/admin/manage-users');
   }
 };

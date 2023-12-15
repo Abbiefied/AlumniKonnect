@@ -49,8 +49,21 @@ const UserSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    lastSeen: {
+        type: Date,
+        default: Date.now,
+      },
 
 })
+
+
+UserSchema.virtual('numberOfEvents', {
+    ref: 'Event', // reference to the Event model
+    localField: '_id', // user's ID field
+    foreignField: 'user', // field in the Event model that references the user
+    count: true // get the count of matching documents
+  });
+
 
 module.exports = mongoose.model('User', UserSchema)
