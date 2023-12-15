@@ -1,13 +1,12 @@
-<!-- Add tabs for different event categories -->
-<div class="event-tabs">
-    <button class="tab" data-category="all">All Events</button>
-    <button class="tab" data-category="professional-development">Professional Development</button>
-    <button class="tab" data-category="networking">Networking</button>
-    <button class="tab" data-category="campus-events">Campus Events</button>
-</div>
 
+<div class="event-tabs d-flex justify-content-center mx-auto">
+    <button class="tab btn" data-category="all">All Events</button>
+    <button class="tab btn" data-category="professional-development">Professional Development</button>
+    <button class="tab btn" data-category="networking">Networking</button>
+    <button class="tab btn" data-category="campus-events">Campus Events</button>
+</div>
+<h1>Events</h1>
 <div class="height-100">
-    <h1>Events</h1>
      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 events-container">
         {{#each events}}
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4" data-category="{{category}}">

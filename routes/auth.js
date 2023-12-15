@@ -128,7 +128,7 @@ router.post("/", (req, res, next) => {
     // Check if the logged-in user is an admin
     if (req.user && req.user.role === 'admin') {
         // Redirect to the admin dashboard if the user is an admin
-        res.redirect('/admin');
+        res.redirect('/');
     } else {
         // Redirect to the regular dashboard if the user is not an admin
         res.redirect('/');

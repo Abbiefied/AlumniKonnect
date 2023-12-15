@@ -4,21 +4,28 @@ $(document).ready(function () {
 
   // Handle tab clicks
   $('.tab').on('click', function () {
-      const category = $(this).data('category');
-      showEvents(category);
+    const category = $(this).data('category');
+    showEvents(category);
+
+    // Remove active class from all tabs
+    $('.tab').removeClass('active');
+
+    // Add active class to the clicked tab
+    $(this).addClass('active');
   });
 
   function showEvents(category) {
-      // Hide all events
-      $('.events-container .col-lg-3').hide();
+    // Hide all events
+    $('.events-container .col-lg-3').hide();
 
-      // Show events of the selected category
-      if (category === 'all') {
-          $('.events-container .col-lg-3').show();
-      } else {
-          $(`.events-container .col-lg-3[data-category="${category}"]`).show();
-      }
+    // Show events of the selected category
+    if (category === 'all') {
+      $('.events-container .col-lg-3').show();
+    } else {
+      $(`.events-container .col-lg-3[data-category="${category}"]`).show();
+    }
   }
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -44,50 +51,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
  });
 });
-
-
-
-
-// // document.getElementById('image').addEventListener('change', function() {
-// //     const preview = document.getElementById('event-preview');
-// //     const file = this.files[0];
-// //     const reader = new FileReader();
-
-// //     reader.onload = function() {
-// //       const img = new Image();
-// //       img.src = reader.result;
-// //       img.className = 'img-fluid';
-// //       preview.innerHTML = '';
-// //       preview.appendChild(img);
-// //     }
-
-// //     reader.readAsDataURL(file);
-// // });
-
-//     function submitForm(event) {
-//         event.preventDefault();
-
-//         const formData = new FormData(event.target);
-//         const eventId = "{{event._id}}";
-
-//         fetch(`/events/${eventId}`, {
-//             method: 'PUT',
-//             body: formData
-//         })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error(`HTTP error! status: ${response.status}`);
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Handle successful response
-//             console.log(data);
-//             // Redirect or show a success message
-//         })
-//         .catch(error => {
-//             // Handle error
-//             console.error('Error:', error);
-//         });
-//     }
-

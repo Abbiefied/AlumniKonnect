@@ -1,20 +1,31 @@
 {{> _form_error}}
 <div class="profile-card mt-2 p-4">
     <div class="profile-picture mb-3">
-            <div class="d-flex flex-row mb-2 align-items-center">
-            <div class="profile-pic me-5"><img src="/uploads/{{image}}" alt="Profile Picture"></div>
-            {{#if image}}
-            <span><form action="/alumni/dashboard/delete-picture" method="POST">
-                <button type="submit">Delete Picture</button>
-            </form> </span>
-            {{/if}}
+        <div class="d-flex flex-row mb-2 align-items-center">
+            <div class="profile-pic me-5">
+                {{#if image}}
+                <img src="/uploads/{{image}}" alt="Profile picture">
+                {{else}}
+                <img src="/uploads/user.png" alt="Profile picture">
+                {{/if}}
+                {{#if image}}
+                <img src="{{image}}" alt="Profile picture">
+                {{/if}}
             </div>
-            <div>
+            {{#if image}}
+            <span>
+                <form action="/alumni/dashboard/delete-picture" method="POST">
+                    <button type="submit">Delete Picture</button>
+                </form>
+            </span>
+            {{/if}}
+        </div>
+        <div>
             <form action="/alumni/dashboard/change-picture" method="POST" enctype="multipart/form-data">
                 <input type="file" name="image" style="width: 200px;" accept="image/*">
                 <button type="submit">Change Picture</button>
             </form>
-            </div>
+        </div>
 
     </div>
     <div class="profile-info">

@@ -149,6 +149,10 @@ a {
   text-decoration: none
 }
 
+.tab .active {
+  background-color: #34D399;
+}
+
 .header {
   display: flex;
   z-index: var(--z-fixed);

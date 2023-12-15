@@ -29,18 +29,18 @@ exports.process_add = [
     } catch (error) {
       if (error.name === "ValidationError") {
         const errors = Object.values(error.errors).map((e) => e.message);
-        return res.render("events/add", {
-          errors,
-          formData: req.body,
-          image: req.user.image,
-        });
+        req.flash('error', errors); 
+        return res.redirect("/events/add"); 
       }
       console.error(error);
+      req.flash('error', 'Internal Server Error');
       res.render("error/500");
     }
   },
 ];
 
+
+// Show all events
 exports.show_events =
   (ensureAuth,
   async (req, res) => {
