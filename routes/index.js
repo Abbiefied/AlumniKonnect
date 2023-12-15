@@ -80,4 +80,11 @@ router.post('/dashboard', ensureAuth, async (req, res) => {
   }
 });
 
+router.get("/opportunity", ensureAuth, (req, res) => {
+  res.render("opportunity", {
+    name: req.user.firstName,
+    image: req.user.image
+  });
+});
+
 module.exports = router;

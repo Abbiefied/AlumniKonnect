@@ -224,6 +224,10 @@ a {
   left: 0
 }
 
+section .auth {
+  background-color: #b1b1b1;
+}
+
 #body-pd {
   margin-top: 110px;
 }
@@ -284,13 +288,13 @@ a {
 }
 
 .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #34D399;
+  border-color: #34D399;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
+  background-color: #b9ecd9;
+  border-color: #b9ecd96d;
 }
 
 
@@ -298,7 +302,7 @@ a {
   font-family: 'Poppins', sans-serif;
 	font-weight: 300;
 	font-size: 15px;
-	line-height: 1.7;
+	line-height: 1;
 	color: #34D399;
 	overflow-x: hidden;
 }
@@ -319,7 +323,7 @@ a:hover {
 .login-container p {
   font-weight: 500;
   font-size: 14px;
-  line-height: 1.7;
+  line-height: 1.5;
 }
 .login-container h4 {
   font-weight: 600;
@@ -330,11 +334,18 @@ h5 span{
   font-weight: 700;
   color: #1f2029;
 }
-.section{
+
+/* .section{
   position: relative;
   width: 100%;
   display: block;
+} */
+
+.welcome {
+  text-decoration: none;
+  color: #34D399;
 }
+
 .full-height{
   min-height: 100vh;
 }
@@ -370,7 +381,7 @@ h5 span{
   z-index: 20;
   top: -10px;
   left: -10px;
-  line-height: 48px;
+  line-height: 20px;
   text-align: center;
   font-size: 24px;
   transition: all 0.5s ease;
@@ -387,7 +398,7 @@ h5 span{
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 .card-3d-wrapper {
   width: 100%;
@@ -686,6 +697,47 @@ table tr{
   background-color: #b9ecd96d;
   border: 1px solid whitesmoke;
 }
+
+.opportunity-header {
+  background-color: #f8f9fa;
+  padding: 40px 0;
+}
+
+.opportunity-welcome {
+  background-color: #fff;
+  padding: 20px 0;
+}
+
+.opportunity-list {
+  padding: 40px 0;
+}
+
+.opportunity h1 {
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.opportunity h2 {
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.opportunity .table {
+  margin-bottom: 0;
+}
+
+.opportunity .btn-primary {
+  background-color: #34D399;
+  color: white;
+  border-color: #34D399;
+}
+
+.opportunity .btn-secondary.disabled {
+  background-color: #ccc;
+  border-color: #ccc;
+}
+
+
 .footer {
   position: absolute;
   left: 0;

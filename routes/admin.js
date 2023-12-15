@@ -52,6 +52,7 @@ router.get('/users/update/:id', isAdmin, adminController.editUser)
 // Update user
 router.post('/users/update/:id', isAdmin, adminController.updateUser);
 
+// Delete users
 router.delete('/users/delete/:id', isAdmin, adminController.deleteUser);
 
 module.exports = router;

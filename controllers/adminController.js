@@ -206,6 +206,7 @@ exports.update_event = [
   },
 ];
 
+// Delete event
 exports.delete_event = async (req, res) => {
     try {
       let event = await Event.findById(req.params.id).lean();

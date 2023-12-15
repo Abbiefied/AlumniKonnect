@@ -25,9 +25,9 @@ exports.ensureGuest = function (req, res, next) {
         }
 exports.isAdmin = function (req, res, next) {
   if (req.isAuthenticated() && req.user.role === 'admin') {
-    console.log('Admin user detected.');
     return next();
 } else {
+    req.flash('error', 'Access denied! Login as an admin.')
     res.redirect('/');
 }
 };

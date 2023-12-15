@@ -60,6 +60,7 @@ exports.show_events =
     }
   });
 
+
 // View more details about an event
 exports.view_event =
   (ensureAuth,
