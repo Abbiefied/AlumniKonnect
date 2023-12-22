@@ -2,11 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const upload = require("../config/multer");
 const Event = require("../models/Event");
-const { ensureAuth } = require("./authController");
+const { ensureAuth, isAdmin } = require("./authController");
 const { validateEvent } = require("../middleware/validators");
 
 const uploadSingle = upload.single("eventImage");
 
+// Get add event page
 exports.add_event =
   (ensureAuth,
   (req, res) => {
@@ -25,22 +26,22 @@ exports.process_add = [
 
       await Event.create(req.body);
       req.flash('success_msg', 'Event created successfully!');
-      res.redirect("/dashboard");
+      res.redirect("alumni/dashboard");
     } catch (error) {
       if (error.name === "ValidationError") {
         const errors = Object.values(error.errors).map((e) => e.message);
-        return res.render("events/add", {
-          errors,
-          formData: req.body,
-          image: req.user.image,
-        });
+        req.flash('error', errors); 
+        return res.redirect("/events/add"); 
       }
       console.error(error);
+      req.flash('error', 'Internal Server Error');
       res.render("error/500");
     }
   },
 ];
 
+
+// Show all events
 exports.show_events =
   (ensureAuth,
   async (req, res) => {
@@ -60,6 +61,8 @@ exports.show_events =
     }
   });
 
+
+// View more details about an event
 exports.view_event =
   (ensureAuth,
   async (req, res) => {
@@ -114,6 +117,7 @@ exports.edit_eventpage =
     }
   });
 
+// Update event
 exports.update_event = [
   ensureAuth,
   uploadSingle, // Multer middleware for file upload
@@ -155,7 +159,7 @@ exports.update_event = [
         { new: true, runValidators: true }
       );
       req.flash('success_msg', 'Event updated successfully!');
-      res.redirect("/dashboard");
+      res.redirect("/alumni/dashboard");
     } catch (error) {
       if (error.name === "ValidationError") {
         const errors = Object.values(error.errors).map((e) => e.message);
@@ -172,6 +176,7 @@ exports.update_event = [
   },
 ];
 
+// Delete event
 exports.delete_event =
   (ensureAuth,
   async (req, res) => {
@@ -190,7 +195,7 @@ exports.delete_event =
         }
         await Event.deleteOne({ _id: req.params.id });
         req.flash('success_msg', 'Event deleted successfully!')
-        res.redirect("/dashboard");
+        res.redirect("/alumni/dashboard");
       }
     } catch (error) {
       console.error(error);
@@ -198,6 +203,7 @@ exports.delete_event =
     }
   });
 
+// Events by a particular user
 exports.user_event =
   (ensureAuth,
   async (req, res) => {

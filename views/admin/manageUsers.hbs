@@ -1,0 +1,35 @@
+<h3>Manage Users</h3>
+{{> _form_error}}
+<table class="striped custom-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Events Created</th>
+      <th>Date Registered</th>
+      <th>Last Active Date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+    <tr>
+      <td>{{firstName}} {{lastName}}</td>
+      <td>{{email}}</td>
+      <td>{{numberOfEvents}}</td>
+      <td>{{createdAt}}</td>
+      <td>{{formatDate lastSeen 'MMMM Do YYYY, h:mm:ss a'}}</td>
+      <td>
+        <a href="/admin/users/update/{{_id}}" class="btn btn-float mb-1">
+          <i class="fas fa-edit"></i>
+        </a>
+        <form action="/admin/users/delete/{{_id}}?_method=DELETE" method="POST" id="delete-user-form">
+          <button type="submit" class="btn bg-danger">
+            <i class="fas fa-trash mt-1"></i>
+          </button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

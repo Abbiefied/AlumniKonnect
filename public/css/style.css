@@ -149,6 +149,10 @@ a {
   text-decoration: none
 }
 
+.tab .active {
+  background-color: #34D399;
+}
+
 .header {
   display: flex;
   z-index: var(--z-fixed);
@@ -224,6 +228,27 @@ a {
   left: 0
 }
 
+section .auth {
+  background-color: #b1b1b1;
+}
+
+#about-alumnikonnect {
+  margin-top: 30px;
+  text-align: justify;
+}
+
+.h1 {
+  font-weight: bold;
+  color: #34D399;
+}
+.checkmark {
+  color: #34D399;
+}
+.list-group-item {
+  border: 0;
+  padding: 0.5rem 1rem;
+}
+
 #body-pd {
   margin-top: 110px;
 }
@@ -284,13 +309,13 @@ a {
 }
 
 .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #34D399;
+  border-color: #34D399;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
+  background-color: #b9ecd9;
+  border-color: #b9ecd96d;
 }
 
 
@@ -298,7 +323,7 @@ a {
   font-family: 'Poppins', sans-serif;
 	font-weight: 300;
 	font-size: 15px;
-	line-height: 1.7;
+	line-height: 1;
 	color: #34D399;
 	overflow-x: hidden;
 }
@@ -319,7 +344,7 @@ a:hover {
 .login-container p {
   font-weight: 500;
   font-size: 14px;
-  line-height: 1.7;
+  line-height: 1.5;
 }
 .login-container h4 {
   font-weight: 600;
@@ -330,11 +355,12 @@ h5 span{
   font-weight: 700;
   color: #1f2029;
 }
-.section{
-  position: relative;
-  width: 100%;
-  display: block;
+
+.welcome {
+  text-decoration: none;
+  color: #34D399;
 }
+
 .full-height{
   min-height: 100vh;
 }
@@ -370,7 +396,7 @@ h5 span{
   z-index: 20;
   top: -10px;
   left: -10px;
-  line-height: 48px;
+  line-height: 20px;
   text-align: center;
   font-size: 24px;
   transition: all 0.5s ease;
@@ -387,7 +413,7 @@ h5 span{
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 .card-3d-wrapper {
   width: 100%;
@@ -626,6 +652,10 @@ h5 span{
   box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.15);
 }
 
+.features-row {
+  background-image: url("/uploads/team1.jpg") ;
+}
+
 .card-engage{
   margin-top: 20px;
 }
@@ -649,11 +679,11 @@ h5 span{
   line-height: 1.5;
   margin-bottom: 2rem;
 }
-
+/* 
 .img-fluid {
   width: 100px;
   height: 100px;
-}
+} */
 
 .overlay {
   position: absolute;
@@ -686,6 +716,146 @@ table tr{
   background-color: #b9ecd96d;
   border: 1px solid whitesmoke;
 }
+
+.opportunity-header {
+  background-color: #f8f9fa;
+  padding: 40px 0;
+}
+
+.opportunity-welcome {
+  background-color: #fff;
+  padding: 20px 0;
+}
+
+.opportunity-list {
+  padding: 40px 0;
+}
+
+.opportunity h1 {
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.opportunity h2 {
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.opportunity .table {
+  margin-bottom: 0;
+}
+
+.opportunity .btn-primary {
+  background-color: #34D399;
+  color: white;
+  border-color: #34D399;
+}
+
+.opportunity .btn-secondary.disabled {
+  background-color: #ccc;
+  border-color: #ccc;
+}
+
+.contact-form h2 {
+  margin-bottom: 20px;
+}
+
+.contact-form .form-group {
+  margin-bottom: 15px;
+}
+
+.contact-form .fa {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.contact-form h3 {
+  margin-bottom: 10px;
+}
+
+.contact-form h5 {
+  font-weight: bold;
+  line-height: 1px;
+}
+
+.contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  height: fit-content;
+}
+
+.address {
+  color: #fff;
+  background-color: #34D399;
+  border: 1px solid #34D399;
+  border-radius: 15px;
+  height: fit-content;
+}
+
+.contact-form .address .row { 
+  margin-right: -15px;
+  margin-left: -15px; 
+} 
+
+.contact-form .address .col-md-4 h1 {
+  font-size: 2rem;
+}
+
+.contact-form .address .col-md-8{
+  padding-top: 40px;
+}
+
+.about-title {
+  font-weight: bold;
+  color: #34D399;
+  margin-bottom: 20px;
+}
+
+.about-subtitle {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.about-text {
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.about-features {
+  margin-bottom: 50px;
+}
+
+.about-features i {
+  color: #34D399;
+}
+
+.about-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.about-stats {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-stats-number {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.about-stats-label {
+  font-size: 18px;
+  color: #666;
+}
+
 .footer {
   position: absolute;
   left: 0;
@@ -751,5 +921,35 @@ table tr{
   .card.event {
       margin-top: 0;
       border: 1px solid #ddd;
+  }
+}
+
+@media (max-width: 767px) {
+  .contact-form .address {
+    margin-top: 10px;
+    height: 50%;
+  }
+  .contact-form .address .row {
+      margin-right: 0; 
+      margin-left: 0; 
+      padding: 0px; 
+  }
+
+  .contact-form .address .col-md-8{
+      padding-top: 0px;
+  }
+
+  .contact-form .address .col-md-4{
+      padding: 0px;
+  }
+  .contact-form .address .col-md-4 h1 {
+      font-size: .5rem;
+      margin: 0px;
+      padding:0px;
+      display: none;
+  }
+
+  .contact {
+    margin-bottom: 200px;
   }
 }

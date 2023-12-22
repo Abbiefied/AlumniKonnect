@@ -1,70 +1,93 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const urlParams = new URLSearchParams(window.location.search);
-  const successMessage = urlParams.get('success');
+  const showSignup = urlParams.get('show') === 'signup';
 
-  if (successMessage) {
-      alert(successMessage);
+  const authCard = document.getElementById('authCard');
+  const checkbox = document.getElementById('reg-log');
+
+  if (authCard && checkbox) {
+    checkbox.checked = showSignup; // Set the checkbox based on the URL parameter
+
+    checkbox.addEventListener('change', function () {
+      authCard.classList.toggle('show-login', !checkbox.checked);
+    });
   }
 });
-document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const showSignup = urlParams.get('show') === 'signup';
 
-    const authCard = document.getElementById('authCard');
-    const checkbox = document.getElementById('reg-log');
+$(document).ready(function () {
+  // Show all events initially
+  showEvents('all');
 
-    if (authCard && checkbox) {
-      checkbox.checked = showSignup; // Set the checkbox based on the URL parameter
+  // Handle tab clicks
+  $('.tab').on('click', function () {
+    const category = $(this).data('category');
+    showEvents(category);
 
-      checkbox.addEventListener('change', function () {
-        authCard.classList.toggle('show-login', !checkbox.checked);
-      });
+    // Remove active class from all tabs
+    $('.tab').removeClass('active');
+
+    // Add active class to the clicked tab
+    $(this).addClass('active');
+  });
+
+  // Handle search button click
+  $('#searchButton').on('click', function () {
+    const searchTerm = $('#searchInput').val().toLowerCase();
+    searchEvents(searchTerm);
+  });
+
+  function showEvents(category) {
+    // Hide all events
+    $('.events-container .col-lg-3').hide();
+
+    // Show events of the selected category
+    if (category === 'all') {
+      $('.events-container .col-lg-3').show();
+    } else {
+      $(`.events-container .col-lg-3[data-category="${category}"]`).show();
     }
- });
+  }
 
+  function searchEvents(searchTerm) {
+    // Hide all events
+    $('.events-container .col-lg-3').hide();
 
+    // Show events that match the search term
+    $('.events-container .col-lg-3').filter(function() {
+      return $(this).text().toLowerCase().includes(searchTerm);
+    }).show();
+  }
+});
 
+(function() {
+  const form = document.querySelector('#contact-form');
 
-// // document.getElementById('image').addEventListener('change', function() {
-// //     const preview = document.getElementById('event-preview');
-// //     const file = this.files[0];
-// //     const reader = new FileReader();
+  form.addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-// //     reader.onload = function() {
-// //       const img = new Image();
-// //       img.src = reader.result;
-// //       img.className = 'img-fluid';
-// //       preview.innerHTML = '';
-// //       preview.appendChild(img);
-// //     }
+    try {
+      const response = await fetch('/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: form.elements['first-name'].value,
+          lastName: form.elements['last-name'].value,
+          email: form.elements['email'].value,
+          phone: form.elements['phone'].value,
+          message: form.elements['message'].value,
+        })
+      });
 
-// //     reader.readAsDataURL(file);
-// // });
-
-//     function submitForm(event) {
-//         event.preventDefault();
-
-//         const formData = new FormData(event.target);
-//         const eventId = "{{event._id}}";
-
-//         fetch(`/events/${eventId}`, {
-//             method: 'PUT',
-//             body: formData
-//         })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error(`HTTP error! status: ${response.status}`);
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Handle successful response
-//             console.log(data);
-//             // Redirect or show a success message
-//         })
-//         .catch(error => {
-//             // Handle error
-//             console.error('Error:', error);
-//         });
-//     }
-
+      // Check for success or error status
+      if (response.ok) {
+        window.location.reload()
+        form.reset();
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
+})();

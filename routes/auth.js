@@ -7,7 +7,7 @@ const controller = require("../controllers/authController");
 const User = require("../models/User");
 
 // Authentication page
-router.get("/", ensureGuest, (req, res) => {
+router.get("/", (req, res) => {
   res.render("auth", {
     layout: "auth",
     errors: [],
@@ -22,7 +22,8 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect("/dashboard");
+    req.flash('success_msg', 'Login successful. Welcome!');
+    res.redirect("/");
   }
 );
 
@@ -37,11 +38,26 @@ router.post("/", (req, res, next) => {
     errors.push({ msg: "Please fill in all fields" });
   }
 
+  // Check email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    errors.push({ msg: "Invalid email format" });
+  }
+
   //Check passsword match
   if (password !== password2) {
     errors.push({ msg: "Passwords do not match" });
   }
 
+  // Check password complexity
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+  if (!passwordRegex.test(password)) {
+    errors.push({
+      msg:
+        "Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, one number, and one special character",
+    });
+  }
+  
   //Check pass length
   if (password.length < 8) {
     errors.push({ msg: "Password should be at least 8 characters" });
@@ -113,10 +129,10 @@ router.post("/", (req, res, next) => {
     // Check if the logged-in user is an admin
     if (req.user && req.user.role === 'admin') {
         // Redirect to the admin dashboard if the user is an admin
-        res.redirect('/admin/dashboard');
+        res.redirect('/');
     } else {
         // Redirect to the regular dashboard if the user is not an admin
-        res.redirect('/dashboard');
+        res.redirect('/');
     }
   });
 }
