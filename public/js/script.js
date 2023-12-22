@@ -70,8 +70,8 @@ $(document).ready(function () {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName: form.elements['first-name'].value,
-          lastName: form.elements['last-name'].value,
+          firstName: form.elements['firstName'].value,
+          lastName: form.elements['lastName'].value,
           email: form.elements['email'].value,
           phone: form.elements['phone'].value,
           message: form.elements['message'].value,

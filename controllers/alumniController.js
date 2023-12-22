@@ -18,7 +18,7 @@ exports.alumniDashboard = async (req, res) => {
       bio: req.user.bio,
       events,
     });
-    console.log(req.user);
+    
   } catch (error) {
     console.error(error);
     res.render("error/500");
