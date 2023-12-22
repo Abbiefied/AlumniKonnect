@@ -22,7 +22,7 @@ exports.dashboard = async (req, res) => {
       bio: req.user.bio,
       events,
     });
-    console.log(req.user);
+  
   } catch (error) {
     console.error(error);
     res.render("error/500");
@@ -323,7 +323,6 @@ exports.editUser = async (req, res) => {
   try {
     // Fetch user details based on ID
     const user = await User.findById(req.params.id).lean();
-    console.log(user);
     res.render('admin/editUser', { user });
   } catch (error) {
     console.error(error);

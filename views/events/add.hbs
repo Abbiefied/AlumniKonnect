@@ -2,10 +2,10 @@
 <div class="height-100">
     <div class="container rounded bg-white mt-5 mb-5">
         <form action="/events" method="POST" enctype="multipart/form-data">
-            <div class="row">
-                <div class="col-md-5 border-right">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
                     <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex justify-content-center align-items-center mb-3 mx-auto">
                             <h4 class="text-right">Create Event</h4>
                         </div>
                         <div class="row mt-2">
@@ -14,9 +14,9 @@
                                 <input type="text" id="title" name="title" class="form-control"
                                     placeholder="Event title" value="{{formData.title}}">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                             <label for="category" class="form-label">Category</label>
-                            <select class="custom-select" id="category" name="category" value="{{formData.category}}">
+                            <select class="custom-select w-100" id="category" name="category" value="{{formData.category}}">
                                 <option value="networking" name="networking">Networking</option>
                                 <option value="campus-events" name="campus-events">Campus Events</option>
                                 <option value="professional-development" name="professional-development">
@@ -28,7 +28,7 @@
                         <div class="row mt-3">
                             <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
-                            <select class="custom-select" id="status" name="status" value="{{formData.status}}">
+                            <select class="custom-select w-100" id="status" name="status" value="{{formData.status}}">
                                 <option value="private" name="private">Private</option>
                                 <option value="public" name="public">Public</option>
                             </select>
@@ -65,15 +65,6 @@
                         <div class="mt-5 text-center">
                             <input type="submit" value="Create Event" class="btn btn-primary profile-button">
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <img class="mt-5"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQF2psCzfbB611rnUhxgMi-lc2oB78ykqDGYb4v83xQ1pAbhPiB&usqp=CAU">
-                        <span class="font-weight-bold">Abbie</span>
-                        <span class="text-black-50">g.adekunle@alustudent.com</span>
-                        <span> </span>
                     </div>
                 </div>
             </div>

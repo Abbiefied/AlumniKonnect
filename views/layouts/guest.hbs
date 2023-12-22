@@ -9,13 +9,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  {{!-- SweetAlert2 styles --}}
+<link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css">
+
   <link rel="stylesheet" href="/css/style.css">
   <title>AlumniKonnect</title>
 </head>
 
 <body>
   {{> _guest_header}}
-  <div class="container-fluid mt-5 pt-5">
+  <div class="container-fluid mt-5 pt-5 px-5">
       <div class="row mx-auto d-flex justify-content-center">
     {{{body}}}
     
@@ -26,6 +29,7 @@
   {{> _footer}}
 
   <!---Script-->
+    <script src="/jquery/jquery.min.js"></script>
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 

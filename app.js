@@ -46,6 +46,13 @@ app.use(
   express.static(__dirname + "/node_modules/bootstrap/dist")
 );
 
+//SweetAlert2
+app.use(
+  "/sweetalert2",
+  express.static(__dirname + "/node_modules/sweetalert2/dist")
+  );
+
+
 //Handlebars Helpers
 const { formatDate, stripTags, editIcon, select } = require("./helpers/hbs");
 
