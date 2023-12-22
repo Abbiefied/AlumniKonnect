@@ -4,6 +4,7 @@ const { ensureAuth, ensureGuest } = require("../controllers/authController");
 const Event = require("../models/Event");
 const User = require('../models/User');
 const contactFormController = require('../controllers/contactFormController')
+const eventController = require('../controllers/eventController')
 
 // Landing page
 router.get("/", (req, res) => {
@@ -52,13 +53,7 @@ router.get("/contact", (req, res) => {
 router.post("/contact", contactFormController.contactFormSubmit);
 
 // Gallery page
-router.get("/gallery", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("./events/gallery", { image: req.user.image });
-  } else {
-    res.render("./events/gallery");
-  }
-});
+router.get("/gallery", eventController.show_gallery);
 
 // Opportunity page
 router.get("/opportunity", ensureAuth, (req, res) => {

@@ -1,1 +1,7 @@
-<h1>Gallery</h1>
+<div class="gallery container-fluid d-flex justify-content-center align-items-center">
+  {{#each events}}
+    <div class="gallery-item col-md-6" data-title="{{title}}">
+      <img src='/uploads/{{eventImage}}' alt="{{title}}" class="gallery-image">
+    </div>
+  {{/each}}
+</div>

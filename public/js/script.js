@@ -14,6 +14,20 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+
+document.addEventListener('DOMContentLoaded', function () {
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  galleryItems.forEach(item => {
+    const title = item.dataset.title;
+    const titleElement = document.createElement('div');
+    titleElement.classList.add('image-title');
+    titleElement.textContent = title;
+    item.appendChild(titleElement);
+  });
+});
+
+
 $(document).ready(function () {
   // Show all events initially
   showEvents('all');
