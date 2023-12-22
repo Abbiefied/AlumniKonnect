@@ -7,7 +7,7 @@ const controller = require("../controllers/authController");
 const User = require("../models/User");
 
 // Authentication page
-router.get("/", ensureGuest, (req, res) => {
+router.get("/", (req, res) => {
   res.render("auth", {
     layout: "auth",
     errors: [],
@@ -22,7 +22,8 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect("/dashboard");
+    req.flash('success_msg', 'Login successful. Welcome!');
+    res.redirect("/");
   }
 );
 

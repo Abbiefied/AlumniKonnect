@@ -1,1 +1,88 @@
-<h1>About Page</h1>
+<div id="about-alumnikonnect" class="mb-5">
+  <div class="row">
+     <div class="col-md-6">
+    <h1 class="h1">About <br> Alumnikonnect</h1>
+    <p>Alumnikonnect is a high-powered alumni networking platform designed to help you easily navigate and drive your alumni community. With Alumnikonnect, you can register for events, set up networking and professional development events, and manage your profile settings.</p>
+     
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><span class="checkmark">✓</span> We provide a versatile space for you to attend or organize events focused on professional development, networking, and campus activities.</li>
+          <li class="list-group-item"><span class="checkmark">✓</span> Our intuitive interface allows you to manage your profile, facilitate discussions, and customize your event preferences with ease.</li>
+          <li class="list-group-item"><span class="checkmark">✓</span> Get instant notifications on the go about new events, alumni meetups happening near you or online networking sessions to keep you in the loop.</li>
+          <li class="list-group-item"><span class="checkmark">✓</span> Our dedicated team ensures that the platform remains secure and reliable, allowing you to focus on building your network and personal development.</li>
+          <li class="list-group-item"><span class="checkmark">✓</span> With Alumnikonnect, you can stay linked to your alma mater while building strong networks and enhancing your professional skills.</li>
+        </ul>
+        <p>Through a wide array of features and personalized support,
+AlumniKonnect presents a seamless and enriching
+experience. Join us today to take your career and connections
+one step further.</p>
+      </div>
+      <div class="col-md-6">
+          <img src="#" alt="" class="src">
+      </div>
+    </div>
+    <a href="/auth" class="btn btn-primary">Register Now</a>
+  </div>
+
+  <div class="container pt-5 mb-4">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="about-image">
+        <img src="path/to/your/image.jpg" alt="Alumnikonnnect">
+      </div>
+      <div class="about-stats">
+        <h2 class="about-stats-number">500+</h2>
+        <p class="about-stats-label">Alumni</p>
+      </div>
+      <a href="/contact" class="btn btn-primary">CONTACT US</a>
+    </div>
+    <div class="col-lg-6">
+      <h6 class="about-title">ALUMNIKONNNECT</h6>
+      <h3><p class="about-subtitle">Bridging The Gap Between Past and Present</p></h3>
+      <hr style="border-width:5px; border-style: solid; color:#34D399; font3-weight: bolder">
+      <p class="about-text">
+        Alumnikonnnect is a unique web-based platform designed to foster strong relationships among alumni. We offer a space where alumni can connect, participate in, and organize various alumni events such as professional development courses, networking gatherings, and campus festivities.
+      </p>
+      <div class="row about-features">
+        <div class="col-md-6">
+          <i class="fa-solid fa-handshake fa-2xl mb-3"></i>
+          <h4>Our Mission</h4>
+          <p>Our mission is to build a community that supports and encourages lifelong engagement, collaboration, and development among the alumni. Through this platform, we aim to keep the spirit of camaraderie alive, thereby strengthening the bond shared among the alumni around the globe.</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa-solid fa-calendar fa-2xl mb-3"></i>
+          <h4>Our Events</h4>
+          <p>Our platform hosts a plethora of events including professional development workshops, networking events, and campus activities. By promoting face-to-face interactions, we aim to ensure the prosperity of the alumni community while fostering lifelong learning.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<h2>Upcoming Events</h2>
+<div class="height-100">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 events-container">
+        {{#each events}}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4" data-category="{{category}}">
+                <div class="card h-100">
+                <div class="card-img-top"
+                    style="height: 300px; background-image: url('/uploads/{{eventImage}}'); background-size: cover;">
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">{{title}}</h5>
+                    </div>
+                    <p class="card-text flex-grow-1">{{stripTags details}}</p>
+                </div>
+                <div class="card-footer text-center">
+                    <small class="text-muted">Location: {{location}}</small><br>
+                    <small class="text-muted">Date: {{eventDate}}</small><br>
+                    <a href="/events/{{_id}}" class="btn btn-primary mt-auto">View Event</a>
+                </div>
+            </div>
+            </div>
+        {{else}}
+            <p>No events to display</p>
+        {{/each}}
+    </div>
+</div>

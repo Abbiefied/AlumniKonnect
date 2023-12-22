@@ -1,7 +1,10 @@
 const passport = require('passport')
 
+
+// Google Authentication
 exports.googleAuth = passport.authenticate('google', { scope: ['profile']})
 
+// Logout
 exports.logout = (req, res, next) => {
     req.logout((error) => {
         if (error) {return next(error)}
@@ -9,6 +12,7 @@ exports.logout = (req, res, next) => {
     })
 }
 
+// Ensure Authentication
 exports.ensureAuth = function (req, res, next) {
         if (req.isAuthenticated()) {
             return next()
@@ -16,13 +20,17 @@ exports.ensureAuth = function (req, res, next) {
             res.redirect('/auth')
         }
         }
+
+// Ensure Guest
 exports.ensureGuest = function (req, res, next) {
             if (req.isAuthenticated()) {
-                res.redirect('/dashboard')
+                res.redirect('/alumni/dashboard')
             } else {
                 return next()
             }
         }
+
+// Ensure Admin
 exports.isAdmin = function (req, res, next) {
   if (req.isAuthenticated() && req.user.role === 'admin') {
     return next();
@@ -32,6 +40,7 @@ exports.isAdmin = function (req, res, next) {
 }
 };
 
+// Set Layout
 exports.setLayout = function (req, res, next) {
   if (req.isAuthenticated() && req.user.role === 'admin') {
     res.locals.layout = 'admin';

@@ -1,3 +1,13 @@
+   <div class="row mt-3">
+      <div class="col-md-6 offset-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="searchInput" placeholder="Search for events">
+          <div class="input-group-append">
+            <button class="btn btn-primary" id="searchButton" type="button">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <div class="event-tabs d-flex justify-content-center mx-auto">
     <button class="tab btn" data-category="all">All Events</button>
@@ -5,12 +15,13 @@
     <button class="tab btn" data-category="networking">Networking</button>
     <button class="tab btn" data-category="campus-events">Campus Events</button>
 </div>
+
 <h1>Events</h1>
 <div class="height-100">
-     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 events-container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 events-container">
         {{#each events}}
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4" data-category="{{category}}">
-                <div class="card h-100">
+            <div class="card h-100">
                 <div class="card-img-top"
                     style="height: 300px; background-image: url('/uploads/{{eventImage}}'); background-size: cover;">
                 </div>
@@ -29,47 +40,9 @@
                     <a href="/events/{{_id}}" class="btn btn-primary mt-auto">View Event</a>
                 </div>
             </div>
-            </div>
-        {{else}}
-            <p>No events to display</p>
-        {{/each}}
-    </div>
-</div>
-
-
-
-
-
-
-
-
-{{!-- <div class="height-100">
-    <h1>Events</h1>
-    <div class="row">
-        {{#each events}}
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="card">
-                <div class="card-img-top"
-                    style="height: 300px; background-image: url('/uploads/{{eventImage}}'); background-size: cover;">
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-title">{{title}}</h5>
-                        <div class="card-icon">
-                            {{{editIcon user ../user _id isAdmin}}}
-                        </div>
-                    </div>
-                    <p class="card-text">{{stripTags details}}</p>
-                </div>
-                <div class="card-footer text-center">
-                    <small class="text-muted">Location: {{location}}</small><br>
-                    <small class="text-muted">Date: {{eventDate}}</small><br>
-                    <a href="/events/{{_id}}" class="btn btn-primary">View Event</a>
-                </div>
-            </div>
         </div>
         {{else}}
         <p>No events to display</p>
         {{/each}}
     </div>
-</div> --}}
+</div>

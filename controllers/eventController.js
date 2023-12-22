@@ -7,6 +7,7 @@ const { validateEvent } = require("../middleware/validators");
 
 const uploadSingle = upload.single("eventImage");
 
+// Get add event page
 exports.add_event =
   (ensureAuth,
   (req, res) => {
@@ -25,7 +26,7 @@ exports.process_add = [
 
       await Event.create(req.body);
       req.flash('success_msg', 'Event created successfully!');
-      res.redirect("/dashboard");
+      res.redirect("alumni/dashboard");
     } catch (error) {
       if (error.name === "ValidationError") {
         const errors = Object.values(error.errors).map((e) => e.message);
@@ -158,7 +159,7 @@ exports.update_event = [
         { new: true, runValidators: true }
       );
       req.flash('success_msg', 'Event updated successfully!');
-      res.redirect("/dashboard");
+      res.redirect("/alumni/dashboard");
     } catch (error) {
       if (error.name === "ValidationError") {
         const errors = Object.values(error.errors).map((e) => e.message);
@@ -194,7 +195,7 @@ exports.delete_event =
         }
         await Event.deleteOne({ _id: req.params.id });
         req.flash('success_msg', 'Event deleted successfully!')
-        res.redirect("/dashboard");
+        res.redirect("/alumni/dashboard");
       }
     } catch (error) {
       console.error(error);
