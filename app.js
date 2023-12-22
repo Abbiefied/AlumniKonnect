@@ -12,6 +12,7 @@ const MongoStore = require("connect-mongo");
 const connectDB = require("./config/db");
 const { setLayout, ensureAuth, isAdmin } = require("./controllers/authController");
 const updateLastSeen = require("./middleware/session")
+
 //Load config
 dotenv.config({ path: "./config/config.env" });
 
@@ -46,12 +47,6 @@ app.use(
   express.static(__dirname + "/node_modules/bootstrap/dist")
 );
 
-//SweetAlert2
-app.use(
-  "/sweetalert2",
-  express.static(__dirname + "/node_modules/sweetalert2/dist")
-  );
-
 
 //Handlebars Helpers
 const { formatDate, stripTags, editIcon, select } = require("./helpers/hbs");
@@ -84,6 +79,7 @@ app.use(
     }),
   })
 );
+
 
 // Set Passport middleware
 app.use(passport.initialize());
@@ -120,6 +116,9 @@ app.use("/auth", require("./routes/auth"));
 app.use("/events", ensureAuth, require("./routes/events"));
 app.use("/admin", isAdmin, require("./routes/admin"));
 app.use("/alumni", ensureAuth, require("./routes/alumni"));
+
+
+
 
 
 

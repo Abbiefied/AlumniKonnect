@@ -224,3 +224,26 @@ exports.user_event =
       return res.render("error/500");
     }
   });
+
+  // Show Gallery
+exports.show_gallery = async (req, res) => {
+  try {
+    const events = await Event.find({ status: "public" })
+        .populate("user")
+        .sort({ createdAt: "desc" })
+        .lean();
+
+
+      if (req.isAuthenticated()) {
+
+        res.render("./events/gallery", { 
+          events,
+          image: req.user.image });
+      } else {
+        res.render("./events/gallery");
+      }
+  } catch (error) {
+    console.error(error);
+    res.render("/error/500");
+  }
+};
