@@ -171,11 +171,14 @@ exports.update_event = [
       };
 
       if (req.file) {
-        // If a new file is uploaded, remove the old one
+        // If a new file is uploaded
         if (existingEvent.eventImage) {
-          fs.unlinkSync(
-            path.join(__dirname, "../public/uploads/", existingEvent.eventImage)
-          );
+          const imagePath = path.join(__dirname, "../public/uploads/", existingEvent.eventImage);
+
+          // Check if the file exists before trying to delete
+          if (fs.existsSync(imagePath)) {
+            fs.unlinkSync(imagePath);
+          }
         }
         updatedEventData.eventImage = req.file.filename;
       }
@@ -186,7 +189,7 @@ exports.update_event = [
         { new: true, runValidators: true }
       );
       req.flash('success_msg', 'Event updated successfully!');
-      // redirect to previous page
+      // redirect to dashboard
       res.redirect("/admin/dashboard");
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -213,9 +216,15 @@ exports.delete_event = async (req, res) => {
         return res.render("error/404");
       }
 
-        if (event.eventImage) {
-          fs.unlinkSync(path.join(__dirname, '../public/uploads/', event.eventImage));
+      if (event.eventImage) {
+        const imagePath = path.join(__dirname, '../public/uploads/', event.eventImage);
+
+        // Check if the file exists before trying to delete
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
         }
+      }
+
         await Event.deleteOne({ _id: req.params.id });
         req.flash('success_msg', 'Event deleted successfully!')
         res.redirect("/admin/dashboard");
@@ -268,14 +277,21 @@ exports.user_event = async (req, res) => {
 exports.changeProfilePicture = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    
     // Check if the user has an existing profile picture
     if (user.image) {
-      // Delete the old profile picture file
-      fs.unlinkSync(path.join(__dirname, `../public/uploads/${user.image}`));
+      const imagePath = path.join(__dirname, `../public/uploads/${user.image}`);
+
+      // Check if the file exists before trying to delete
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
     }
+
     // Update user's image property in the database with the new file name
     user.image = req.file.filename;
     await user.save();
+
     req.flash('success_msg', 'Profile picture changed successfully!');
     res.redirect("/admin/dashboard"); // Redirect to the dashboard
   } catch (err) {
@@ -292,8 +308,12 @@ exports.deleteProfilePicture = async (req, res) => {
 
     // Check if the user has an existing profile picture
     if (user.image) {
-      // Delete the profile picture file
-      fs.unlinkSync(path.join(__dirname, `../public/uploads/${user.image}`));
+      const imagePath = path.join(__dirname, `../public/uploads/${user.image}`);
+
+      // Check if the file exists before trying to delete
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
 
       // Update user's image property in the database to null
       user.image = null;
