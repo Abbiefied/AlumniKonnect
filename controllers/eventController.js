@@ -144,11 +144,14 @@ exports.update_event = [
       };
 
       if (req.file) {
-        // If a new file is uploaded, remove the old one
+        // If a new file is uploaded
         if (existingEvent.eventImage) {
-          fs.unlinkSync(
-            path.join(__dirname, "../public/uploads/", existingEvent.eventImage)
-          );
+          const imagePath = path.join(__dirname, "../public/uploads/", existingEvent.eventImage);
+
+          // Check if the file exists before trying to delete
+          if (fs.existsSync(imagePath)) {
+            fs.unlinkSync(imagePath);
+          }
         }
         updatedEventData.eventImage = req.file.filename;
       }
@@ -177,31 +180,36 @@ exports.update_event = [
 ];
 
 // Delete event
-exports.delete_event =
-  (ensureAuth,
-  async (req, res) => {
-    try {
-      let event = await Event.findById(req.params.id).lean();
+exports.delete_event = (ensureAuth, async (req, res) => {
+  try {
+    let event = await Event.findById(req.params.id).lean();
 
-      if (!event) {
-        return res.render("error/404");
-      }
-
-      if (event.user != req.user.id) {
-        res.redirect("/events");
-      } else {
-        if (event.eventImage) {
-          fs.unlinkSync(path.join(__dirname, '../public/uploads/', event.eventImage));
-        }
-        await Event.deleteOne({ _id: req.params.id });
-        req.flash('success_msg', 'Event deleted successfully!')
-        res.redirect("/alumni/dashboard");
-      }
-    } catch (error) {
-      console.error(error);
-      return res.render("error/500");
+    if (!event) {
+      return res.render("error/404");
     }
-  });
+
+    if (event.user != req.user.id) {
+      res.redirect("/events");
+    } else {
+      if (event.eventImage) {
+        const imagePath = path.join(__dirname, '../public/uploads/', event.eventImage);
+
+        // Check if the file exists before trying to delete
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+      }
+
+      await Event.deleteOne({ _id: req.params.id });
+      req.flash('success_msg', 'Event deleted successfully!')
+      res.redirect("/alumni/dashboard");
+    }
+  } catch (error) {
+    console.error(error);
+    return res.render("error/500");
+  }
+});
+
 
 // Events by a particular user
 exports.user_event =
