@@ -1,6 +1,6 @@
 # AlumniKonnect
 
-AlumniKonnect is a web application that facilitates communication and collaboration among alumni of an institution. It allows alumni to stay connected, share experiences, and work on various projects together.
+AlumniKonnect is a web application that facilitates communication and collaboration among alumni of African Leadership University. It allows alumni to stay connected, share experiences, and work on various projects together.
 
 ## Hosted Site
 - https://alumnikonnect.onrender.com
@@ -8,7 +8,7 @@ AlumniKonnect is a web application that facilitates communication and collaborat
 ## Features
 
 - **User Authentication**: Secure login using Google OAuth 2.0 and Email and password.
-- **Dashboard**: Display of upcoming events and recent activities.
+- **Dashboard**: Profile update and Display of created events.
 - **Event Management**: Add, delete and edit events seamlessly.
 - **Communication**: Alumni can interact and communicate with each other.
 - **Opportunity Board**: Alumni can access professional and personal development opportunities.
@@ -31,8 +31,18 @@ AlumniKonnect is a web application that facilitates communication and collaborat
    - SESSION_SECRET=your_session_secret
 
 4. **Usage:**
+
+   **Development Mode**
+   - npm run dev
+   - Visit http://localhost:3000 in your web browser.
+     
+   **Production Mode**
    - npm start
    - Visit http://localhost:3000 in your web browser.
 
-5. **Contributing:**
+6. **Contributing:**
    - This project is not accepting contributions.
+
+## Notes
+- Render.com does not save images for the free plan. A paid plan is required to use the feature. As a result, uploaded images are not displayed after the browser is refreshed. The website will be scaled and moved to a better hosting platform in the future.
+
